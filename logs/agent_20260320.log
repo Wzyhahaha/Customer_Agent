@@ -1,0 +1,1011 @@
+2026-03-20 00:55:56,151 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 00:55:56,159 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：Error loading data\扫地机器人100问2.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\扫地机器人100问2.txt
+2026-03-20 00:55:56,297 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载失败：Error loading data\扫拖一体机器人100问.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\扫拖一体机器人100问.txt
+2026-03-20 00:55:56,308 - agent - ERROR - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载失败：Error loading data\故障排除.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 2: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\故障排除.txt
+2026-03-20 00:55:56,318 - agent - ERROR - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载失败：Error loading data\维护保养.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\维护保养.txt
+2026-03-20 00:55:56,327 - agent - ERROR - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载失败：Error loading data\选购指南.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 2: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\选购指南.txt
+2026-03-20 00:56:13,333 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 00:56:13,334 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：Error loading data\扫地机器人100问2.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\扫地机器人100问2.txt
+2026-03-20 00:56:13,336 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载失败：Error loading data\扫拖一体机器人100问.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\扫拖一体机器人100问.txt
+2026-03-20 00:56:13,338 - agent - ERROR - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载失败：Error loading data\故障排除.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 2: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\故障排除.txt
+2026-03-20 00:56:13,339 - agent - ERROR - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载失败：Error loading data\维护保养.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 4: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\维护保养.txt
+2026-03-20 00:56:13,341 - agent - ERROR - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载失败：Error loading data\选购指南.txt
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 43, in lazy_load
+    text = f.read()
+           ^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xab in position 2: illegal multibyte sequence
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 47, in get_file_documents
+    return txt_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 48, in txt_loader
+    return TextLoader(filepath).load()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\text.py", line 56, in lazy_load
+    raise RuntimeError(f"Error loading {self.file_path}") from e
+RuntimeError: Error loading data\选购指南.txt
+2026-03-20 01:03:10,541 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:03:17,831 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 75, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 675, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+2026-03-20 01:03:29,153 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 1395, in getresponse
+    response.begin()
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 325, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 294, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+The above exception was the direct cause of the following exception:
+
+urllib3.exceptions.ProxyError: ('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 75, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 671, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-20 01:03:35,972 - agent - INFO - vector_store.py:78 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:03:39,728 - agent - INFO - vector_store.py:78 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:03:43,110 - agent - INFO - vector_store.py:78 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:04:18,075 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:04:42,433 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:05:02,534 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 1395, in getresponse
+    response.begin()
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 325, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\http\client.py", line 294, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+The above exception was the direct cause of the following exception:
+
+urllib3.exceptions.ProxyError: ('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response'))
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 75, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 671, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))
+2026-03-20 01:05:35,016 - agent - INFO - vector_store.py:78 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:05:40,014 - agent - INFO - vector_store.py:78 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:05:43,348 - agent - INFO - vector_store.py:78 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:05:47,885 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:05:52,219 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:05:55,685 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:06:03,834 - agent - INFO - vector_store.py:78 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:06:08,402 - agent - INFO - vector_store.py:78 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:06:11,618 - agent - INFO - vector_store.py:78 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:09:41,557 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:10:14,092 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 75, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 675, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+2026-03-20 01:10:40,791 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:11:12,834 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:11:30,960 - agent - ERROR - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 75, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 675, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+2026-03-20 01:11:40,470 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:11:46,656 - agent - WARNING - vector_store.py:66 - [加载知识库]data\扫地机器人100问.pdf内没有有效文本内容，跳过
+2026-03-20 01:11:49,952 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:11:53,258 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:12:03,167 - agent - INFO - vector_store.py:78 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:12:07,823 - agent - INFO - vector_store.py:78 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:12:11,024 - agent - INFO - vector_store.py:78 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:14:02,740 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问.pdf内容加载失败：object of type 'NoneType' has no len()
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 65, in load_document
+    print(f"📄 原始文档数量: {len(documents)}")
+                              ^^^^^^^^^^^^^^
+TypeError: object of type 'NoneType' has no len()
+2026-03-20 01:14:14,569 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问2.txt内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 77, in load_document
+    self.vector_store.add_documents(split_docunment)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 675, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+2026-03-20 01:14:32,381 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:14:37,578 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问.pdf内容加载失败：object of type 'NoneType' has no len()
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 65, in load_document
+    print(f"📄 原始文档数量: {len(documents)}")
+                              ^^^^^^^^^^^^^^
+TypeError: object of type 'NoneType' has no len()
+2026-03-20 01:14:40,950 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:14:44,275 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:14:50,331 - agent - INFO - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:14:54,565 - agent - INFO - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:14:57,871 - agent - INFO - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:16:52,918 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问.pdf内容加载失败：`pypdf` package not found, please install it with `pip install pypdf`
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 359, in lazy_parse
+    import pypdf
+ModuleNotFoundError: No module named 'pypdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 49, in get_file_documents
+    return pdf_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 46, in pdf_loader
+    return loader.load()
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\pdf.py", line 305, in lazy_load
+    yield from self.parser.lazy_parse(blob)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 361, in lazy_parse
+    raise ImportError(
+ImportError: `pypdf` package not found, please install it with `pip install pypdf`
+2026-03-20 01:17:10,799 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问.pdf内容加载失败：`pypdf` package not found, please install it with `pip install pypdf`
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 359, in lazy_parse
+    import pypdf
+ModuleNotFoundError: No module named 'pypdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 49, in get_file_documents
+    return pdf_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 46, in pdf_loader
+    return loader.load()
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\pdf.py", line 305, in lazy_load
+    yield from self.parser.lazy_parse(blob)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 361, in lazy_parse
+    raise ImportError(
+ImportError: `pypdf` package not found, please install it with `pip install pypdf`
+2026-03-20 01:17:13,971 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:17:17,735 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:17:23,730 - agent - INFO - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:17:44,151 - agent - INFO - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:18:00,490 - agent - INFO - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:19:21,942 - agent - ERROR - vector_store.py:82 - [加载知识库]data\扫地机器人100问.pdf内容加载失败：`pypdf` package not found, please install it with `pip install pypdf`
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 359, in lazy_parse
+    import pypdf
+ModuleNotFoundError: No module named 'pypdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 64, in load_document
+    documents:list[Document] = get_file_documents(path)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\rag\vector_store.py", line 49, in get_file_documents
+    return pdf_loader(read_path)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\25086\Desktop\test_ai_Heima\Agent项目\utils\file_handler.py", line 46, in pdf_loader
+    return loader.load()
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\pdf.py", line 305, in lazy_load
+    yield from self.parser.lazy_parse(blob)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 361, in lazy_parse
+    raise ImportError(
+ImportError: `pypdf` package not found, please install it with `pip install pypdf`
+2026-03-20 01:19:24,896 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:19:28,208 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:19:34,179 - agent - INFO - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:19:38,521 - agent - INFO - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:19:42,269 - agent - INFO - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:20:51,544 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫地机器人100问.pdf内容加载成功
+2026-03-20 01:20:54,147 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:20:57,478 - agent - INFO - vector_store.py:80 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:21:04,365 - agent - INFO - vector_store.py:80 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:21:08,280 - agent - INFO - vector_store.py:80 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:21:12,420 - agent - INFO - vector_store.py:80 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 01:27:17,032 - agent - INFO - vector_store.py:61 - [加载知识库]data\扫地机器人100问.pdf内容已经存在知识库内，跳过
+2026-03-20 01:27:17,032 - agent - INFO - vector_store.py:61 - [加载知识库]data\扫地机器人100问2.txt内容已经存在知识库内，跳过
+2026-03-20 01:27:17,033 - agent - INFO - vector_store.py:61 - [加载知识库]data\扫拖一体机器人100问.txt内容已经存在知识库内，跳过
+2026-03-20 01:27:17,033 - agent - INFO - vector_store.py:61 - [加载知识库]data\故障排除.txt内容已经存在知识库内，跳过
+2026-03-20 01:27:17,034 - agent - INFO - vector_store.py:61 - [加载知识库]data\维护保养.txt内容已经存在知识库内，跳过
+2026-03-20 01:27:17,034 - agent - INFO - vector_store.py:61 - [加载知识库]data\选购指南.txt内容已经存在知识库内，跳过
+2026-03-20 01:27:37,237 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫地机器人100问.pdf内容加载成功
+2026-03-20 01:27:39,842 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫地机器人100问2.txt内容加载成功
+2026-03-20 01:27:44,497 - agent - INFO - vector_store.py:78 - [加载知识库]data\扫拖一体机器人100问.txt内容加载成功
+2026-03-20 01:27:51,505 - agent - INFO - vector_store.py:78 - [加载知识库]data\故障排除.txt内容加载成功
+2026-03-20 01:27:55,536 - agent - INFO - vector_store.py:78 - [加载知识库]data\维护保养.txt内容加载成功
+2026-03-20 01:27:59,740 - agent - INFO - vector_store.py:78 - [加载知识库]data\选购指南.txt内容加载成功
+2026-03-20 19:57:39,431 - agent - WARNING - agent_tools.py:73 - [fetch_external_data]未能检索到用户：1021在2025-01的使用记录数据
+2026-03-20 21:30:41,657 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有1条消息
+2026-03-20 21:30:41,657 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 扫地机器人在我所在的地区的气温下如何保养
+2026-03-20 21:30:52,190 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-20 21:30:52,190 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-20 21:30:52,191 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-20 21:30:52,191 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有3条消息
+2026-03-20 21:30:52,191 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 合肥
+2026-03-20 21:30:56,515 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_weather
+2026-03-20 21:30:56,515 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'city': '合肥'}
+2026-03-20 21:30:56,624 - agent - INFO - middleware.py:22 - [tool monitor]工具get_weather调用成功
+2026-03-20 21:30:56,625 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有5条消息
+2026-03-20 21:30:56,625 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 城市合肥天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-03-20 21:31:06,816 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-20 21:31:06,816 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人在26摄氏度气温和50%湿度环境下的保养方法'}
+2026-03-20 21:31:29,745 - agent - ERROR - middleware.py:27 - 工具rag_summarize调用失败，原因：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)')))
+2026-03-20 21:33:35,979 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有1条消息
+2026-03-20 21:33:35,980 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 扫地机器人在我所在的地区的气温下如何保养
+2026-03-20 21:33:39,263 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-20 21:33:39,263 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-20 21:33:39,264 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-20 21:33:39,265 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有3条消息
+2026-03-20 21:33:39,265 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 合肥
+2026-03-20 21:33:46,721 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_weather
+2026-03-20 21:33:46,721 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'city': '合肥'}
+2026-03-20 21:33:46,721 - agent - INFO - middleware.py:22 - [tool monitor]工具get_weather调用成功
+2026-03-20 21:33:46,723 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有5条消息
+2026-03-20 21:33:46,723 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 城市合肥天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-03-20 21:33:48,987 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-20 21:33:48,987 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人在26摄氏度50%湿度环境下的保养方法'}
+2026-03-20 21:33:52,803 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-20 21:33:52,805 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有7条消息
+2026-03-20 21:33:52,805 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 在26摄氏度50%湿度环境下，扫地机器人应每日使用后用干软布擦拭机身外壳，去除灰尘和水渍，避免污渍硬化；每次清扫完成后及时清理防撞条缝隙中的毛发和线头，防止卡扣卡顿影响回弹。
+2026-03-20 21:39:14,430 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有1条消息
+2026-03-20 21:39:14,431 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 给我生成我的使用报告
+2026-03-20 21:39:17,215 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_id
+2026-03-20 21:39:17,216 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-20 21:39:17,216 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_id调用成功
+2026-03-20 21:39:17,217 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有3条消息
+2026-03-20 21:39:17,217 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 1004
+2026-03-20 21:39:18,924 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_current_month
+2026-03-20 21:39:18,925 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-20 21:39:18,925 - agent - INFO - middleware.py:22 - [tool monitor]工具get_current_month调用成功
+2026-03-20 21:39:18,926 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有5条消息
+2026-03-20 21:39:18,926 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 2025-06
+2026-03-20 21:39:24,171 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：fill_context_for_report
+2026-03-20 21:39:24,171 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-20 21:39:24,171 - agent - INFO - middleware.py:22 - [tool monitor]工具fill_context_for_report调用成功
+2026-03-20 21:39:24,172 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有7条消息
+2026-03-20 21:39:24,172 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| fill_context_for_report已调用
+2026-03-20 21:39:28,339 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：fetch_external_data
+2026-03-20 21:39:28,340 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'user_id': '1004', 'month': '2025-06'}
+2026-03-20 21:39:28,342 - agent - INFO - middleware.py:22 - [tool monitor]工具fetch_external_data调用成功
+2026-03-20 21:39:28,342 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有9条消息
+2026-03-20 21:39:28,342 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| {"特征": "85㎡ | 2猫 | 混合地面", "效率": "猫砂泼洒处理:8次/月\\n自动回充成功率:89%", "耗材": "主刷缠绕:严重\\n滤网更换:急需", "对比": "建议升级吸力至2500Pa"}
+2026-03-20 21:39:30,343 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-20 21:39:30,344 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人主刷缠绕严重处理方法'}
+2026-03-20 21:39:32,353 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-20 21:39:32,354 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有11条消息
+2026-03-20 21:39:32,354 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 使用配套清理工具或剪刀小心去除缠绕物；若在长毛地毯上频繁缠绕，可开启防缠绕功能或更换防缠绕主刷。
+2026-03-20 21:39:34,897 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-20 21:39:34,897 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人滤网更换周期和方法'}
+2026-03-20 21:39:37,566 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-20 21:39:37,567 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有13条消息
+2026-03-20 21:39:37,567 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 滤网堵塞会导致吸力下降和机器人异响，建议定期清理：拆卸后用软毛刷轻刷灰尘，清水冲洗并晾干后装回。参考资料中未明确说明滤网更换周期，仅提及清理方法。
+2026-03-20 21:39:39,590 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-20 21:39:39,591 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '多宠物家庭扫地机器人使用建议'}
+2026-03-20 21:39:44,087 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-20 21:39:44,088 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有15条消息
+2026-03-20 21:39:44,088 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 多宠物家庭使用扫地机器人时，建议更换防缠绕主刷和高密度滤网，开启“宠物模式”以增大吸力和清扫频次，并每天清理尘盒和滚刷。

@@ -1,0 +1,127 @@
+2026-03-22 15:05:51,653 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 15:05:51,701 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 在我所在的城市，怎么保养机器人
+2026-03-22 15:05:59,116 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 15:05:59,117 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 15:05:59,118 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 15:05:59,153 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 15:05:59,153 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 杭州
+2026-03-22 15:06:11,203 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_weather
+2026-03-22 15:06:11,204 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'city': '杭州'}
+2026-03-22 15:06:11,269 - agent - INFO - middleware.py:22 - [tool monitor]工具get_weather调用成功
+2026-03-22 15:06:11,800 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有5条消息
+2026-03-22 15:06:11,800 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 城市杭州天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-03-22 15:06:24,292 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 15:06:24,293 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人在湿度50%、晴天、低灰尘环境下的保养方法'}
+2026-03-22 15:06:38,670 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 15:06:39,470 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有7条消息
+2026-03-22 15:06:39,471 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 在湿度50%、晴天、低灰尘环境下，扫地机器人每次使用后应用干软布擦拭机身外壳，去除灰尘和水渍；同时及时清理防撞条缝隙中的毛发和线头，防止卡扣卡顿。
+2026-03-22 15:23:42,989 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 15:23:42,989 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 在我所在的城市，如何保养机器人
+2026-03-22 15:23:46,710 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 15:23:46,711 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 15:23:46,712 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 15:23:46,746 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 15:23:46,746 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 合肥
+2026-03-22 15:23:56,573 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_weather
+2026-03-22 15:23:56,573 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'city': '合肥'}
+2026-03-22 15:23:56,574 - agent - INFO - middleware.py:22 - [tool monitor]工具get_weather调用成功
+2026-03-22 15:23:57,105 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有5条消息
+2026-03-22 15:23:57,105 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 城市合肥天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-03-22 15:24:04,824 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 15:24:04,824 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人在晴天、湿度50%环境下如何保养'}
+2026-03-22 15:24:08,135 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 15:24:09,079 - agent - INFO - middleware.py:35 - [log_before_model]即将调用模型，带有7条消息
+2026-03-22 15:24:09,079 - agent - DEBUG - middleware.py:36 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 在晴天、湿度50%环境下，扫地机器人使用后应每日用干软布擦拭机身外壳，去除灰尘和水渍，避免污渍硬化；每次清扫完成后，及时清理防撞条缝隙中的毛发和线头，防止卡扣卡顿影响回弹。
+2026-03-22 16:22:57,131 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:22:57,131 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 在我所在的城市，如何保养机器人
+2026-03-22 16:23:00,481 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 16:23:00,481 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 16:23:00,482 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 16:23:00,483 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 16:23:00,483 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 深圳
+2026-03-22 16:23:05,590 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 16:23:05,590 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '高湿度多尘城市扫地机器人保养建议'}
+2026-03-22 16:23:07,164 - agent - ERROR - middleware.py:27 - 工具rag_summarize调用失败，原因：Error executing plan: Error sending backfill request to compactor: Error constructing hnsw segment reader: Error creating hnsw segment reader: Error loading hnsw index
+2026-03-22 16:24:22,498 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:24:22,499 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 如何保养机器人
+2026-03-22 16:24:25,121 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 16:24:25,121 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人保养维护方法'}
+2026-03-22 16:24:26,415 - agent - ERROR - middleware.py:27 - 工具rag_summarize调用失败，原因：Error executing plan: Error sending backfill request to compactor: Error constructing hnsw segment reader: Error creating hnsw segment reader: Error loading hnsw index
+2026-03-22 16:30:09,073 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:30:09,073 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 如何保养机器人
+2026-03-22 16:30:12,423 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 16:30:12,424 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人保养维护方法'}
+2026-03-22 16:30:14,063 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人保养维护方法\n2. 参考资料(在下一个###之前内容均为参考资料)：\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-22 16:30:16,422 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 16:30:16,423 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 16:30:16,423 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 定期清理尘盒和滤网，检查并清除滚刷及边刷缠绕的毛发杂物，保持传感器清洁，避免在潮湿或有水区域使用，及时更换磨损配件，按照说明书进行电池维护。
+2026-03-22 16:46:38,043 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:46:38,044 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 我当前所在城市在是哪里
+2026-03-22 16:46:45,214 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 16:46:45,214 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 16:46:45,215 - agent - WARNING - agent_tools.py:48 - [get_user_location]未获取到用户真实城市，返回默认提示
+2026-03-22 16:46:45,215 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 16:46:45,216 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 16:46:45,216 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 未获取到城市信息
+2026-03-22 16:47:26,068 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:47:26,069 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 我当前所在城市是哪里
+2026-03-22 16:47:29,539 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 16:47:29,539 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 16:47:29,539 - agent - WARNING - agent_tools.py:48 - [get_user_location]未获取到用户真实城市，返回默认提示
+2026-03-22 16:47:29,540 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 16:47:29,541 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 16:47:29,541 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 未获取到城市信息
+2026-03-22 16:52:03,240 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 16:52:03,241 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 获取我当前所在城市
+2026-03-22 16:52:10,298 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 16:52:10,298 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 16:52:10,299 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 16:52:10,300 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 16:52:10,300 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 哈尔滨市
+2026-03-22 20:08:16,914 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 20:08:16,916 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 在哈尔滨如何保养机器人
+2026-03-22 20:08:21,895 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_user_location
+2026-03-22 20:08:21,896 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 20:08:21,898 - agent - INFO - middleware.py:22 - [tool monitor]工具get_user_location调用成功
+2026-03-22 20:08:21,899 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 20:08:21,899 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 哈尔滨市
+2026-03-22 20:08:25,376 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_weather
+2026-03-22 20:08:25,377 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'city': '哈尔滨市'}
+2026-03-22 20:08:25,408 - agent - INFO - middleware.py:22 - [tool monitor]工具get_weather调用成功
+2026-03-22 20:08:25,409 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有5条消息
+2026-03-22 20:08:25,409 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 城市哈尔滨市天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-03-22 20:08:29,451 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 20:08:29,451 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人保养指南 环境湿度50% 晴天'}
+2026-03-22 20:08:33,448 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人保养指南 环境湿度50% 晴天\n2. 参考资料(在下一个###之前内容均为参考资料)：\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-22 20:08:36,276 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 20:08:36,278 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有7条消息
+2026-03-22 20:08:36,278 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 在环境湿度50%的晴天，扫地机器人保养需注意：及时清理尘盒和滤网，检查边刷与滚刷是否缠绕异物，确保传感器清洁，并将设备存放于干燥通风处。
+2026-03-22 23:21:32,960 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有1条消息
+2026-03-22 23:21:32,961 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 我是用户1001，请根据我的使用记录给出后续的保养建议和使用建议
+2026-03-22 23:21:38,350 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：get_current_month
+2026-03-22 23:21:38,350 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 23:21:38,351 - agent - INFO - middleware.py:22 - [tool monitor]工具get_current_month调用成功
+2026-03-22 23:21:38,352 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有3条消息
+2026-03-22 23:21:38,352 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 2025-01
+2026-03-22 23:21:46,544 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：fill_context_for_report
+2026-03-22 23:21:46,544 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{}
+2026-03-22 23:21:46,546 - agent - INFO - middleware.py:22 - [tool monitor]工具fill_context_for_report调用成功
+2026-03-22 23:21:46,547 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有5条消息
+2026-03-22 23:21:46,547 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| fill_context_for_report已调用
+2026-03-22 23:21:49,026 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：fetch_external_data
+2026-03-22 23:21:49,026 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'user_id': '1001', 'month': '2025-01'}
+2026-03-22 23:21:49,039 - agent - INFO - middleware.py:22 - [tool monitor]工具fetch_external_data调用成功
+2026-03-22 23:21:49,040 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有7条消息
+2026-03-22 23:21:49,041 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| {"特征": "65㎡公寓 | 单身 | 木地板", "效率": "覆盖率:85%\\n日均清扫:45㎡\\n漏扫区域:沙发底部（高度不足）", "耗材": "主刷寿命:剩余60天\\nHEPA滤网:剩余40%", "对比": "优于65%同面积用户（清洁频率更高）"}
+2026-03-22 23:21:54,842 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 23:21:54,843 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人主刷和HEPA滤网保养建议'}
+2026-03-22 23:22:00,876 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人主刷和HEPA滤网保养建议\n2. 参考资料(在下一个###之前内容均为参考资料)：\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-22 23:22:04,584 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 23:22:04,586 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有9条消息
+2026-03-22 23:22:04,586 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 主刷保养建议：定期清理缠绕在主刷上的毛发和杂物，建议每周检查并清洁一次；若主刷磨损严重或转动异常，应及时更换。HEPA滤网保养建议：每1-2个月取出滤网，用吸尘器或软毛刷清除表面灰尘，不可水洗；当滤网堵塞、破损或使用超过6-12个月时，应更换新滤网。
+2026-03-22 23:22:07,319 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-22 23:22:07,319 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人在木地板上的使用建议和漏扫区域处理方法'}
+2026-03-22 23:22:07,567 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人在木地板上的使用建议和漏扫区域处理方法\n2. 参考资料(在下一个###之前内容均为参考资料)：\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-22 23:22:10,447 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-22 23:22:10,448 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有11条消息
+2026-03-22 23:22:10,448 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 在木地板上使用扫地机器人时，建议定期清理滚刷和边刷，避免毛发缠绕影响清洁效果；确保地板干燥，防止打滑或损坏设备。对于漏扫区域，可手动启动局部清扫模式，或通过APP设置虚拟墙/禁区重新规划路径进行补扫。

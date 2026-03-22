@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>city locator</title>
+</head>
+<body>
+  <script>
+    const StreamlitBridge = {
+      send(type, payload = {}) {
+        window.parent.postMessage(
+          {
+            isStreamlitMessage: true,
+            type,
+            ...payload,
+          },
+          "*"
+        );
+      },
+      setFrameHeight(height = 0) {
+        this.send("streamlit:setFrameHeight", { height });
+      },
+      setComponentValue(value) {
+        this.send("streamlit:setComponentValue", { value });
+      },
+      ready() {
+        this.send("streamlit:componentReady", { apiVersion: 1 });
+      },
+    };
+
+    function locateCoordinates() {
+      if (!navigator.geolocation) {
+        StreamlitBridge.setComponentValue({
+          status: "error",
+          latitude: null,
+          longitude: null,
+          error: "当前浏览器不支持定位。",
+        });
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          StreamlitBridge.setComponentValue({
+            status: "success",
+            latitude,
+            longitude,
+            error: "",
+          });
+        },
+        (error) => {
+          StreamlitBridge.setComponentValue({
+            status: "error",
+            latitude: null,
+            longitude: null,
+            error: error.message || "定位失败。",
+          });
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 300000,
+          timeout: 10000,
+        }
+      );
+    }
+
+    window.addEventListener("message", (event) => {
+      if (event.data?.type !== "streamlit:render") {
+        return;
+      }
+      locateCoordinates();
+    });
+
+    StreamlitBridge.ready();
+    StreamlitBridge.setFrameHeight(0);
+  </script>
+</body>
+</html>
