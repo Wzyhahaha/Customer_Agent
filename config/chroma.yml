@@ -1,10 +1,24 @@
-collection_name: agent
-persist_directory: chroma_db
-k: 3
-data_path: data
-md5_hex_store: md5.text
-allow_knowledge_file_type: ["txt", "pdf"]
+default_store: policy_answer
+
+stores:
+  question_recall:
+    collection_name: question_recall
+    persist_directory: chroma_db/questions
+    data_path: data/questions
+    md5_hex_store: md5_questions.text
+    allow_knowledge_file_type: ["jsonl", "txt", "pdf"]
+    k: 5
+    mode: question_recall
+
+  policy_answer:
+    collection_name: policy_answer
+    persist_directory: chroma_db/policies
+    data_path: data/policies
+    md5_hex_store: md5_policies.text
+    allow_knowledge_file_type: ["txt", "pdf", "jsonl"]
+    k: 4
+    mode: policy_answer
 
 chunk_size: 200
 chunk_overlap: 20
-separators: ["\n\n", "\n", "。", "！", "？", ".", "!", "?"]
+separators: ["\n\n", "\n", "。", "；", "，", ".", "!", "?"]

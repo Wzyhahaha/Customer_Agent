@@ -1,15 +1,19 @@
-# import os,sys
-# sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import time
 
 import streamlit as st
+
 from agent.react_agent import ReactAgent
 from agent.tools.agent_tools import extract_user_id, user_ids
 from rag.vector_store import VectorStoreService
 from utils.amap_service import AMapServiceError, get_location_snapshot
 from utils.chat_history import append_user_chat_message, load_user_chat_history
 from utils.city_locator_component import locate_city
-from utils.runtime_context import set_user_city, set_user_weather, set_user_temperature, set_user_id
+from utils.runtime_context import (
+    set_user_city,
+    set_user_id,
+    set_user_temperature,
+    set_user_weather,
+)
 
 
 MAX_CONTEXT_MESSAGES = 12
@@ -20,8 +24,19 @@ def get_agent_context_messages() -> list[dict[str, str]]:
     return messages[-MAX_CONTEXT_MESSAGES:]
 
 
+@st.cache_resource(show_spinner=False)
+def initialize_vector_store_once():
+    VectorStoreService.ensure_all_vector_stores_synced()
+    return True
+
+
 st.title("智扫通机器人智能客服")
 st.divider()
+
+if "message" not in st.session_state:
+    st.session_state["message"] = []
+if "current_user_id" not in st.session_state:
+    st.session_state["current_user_id"] = ""
 
 location_result = locate_city()
 if isinstance(location_result, dict):
@@ -55,19 +70,12 @@ set_user_id(st.session_state.get("current_user_id", ""))
 
 if "agent" not in st.session_state:
     try:
-        if "vector_store_initialized" not in st.session_state:
-            with st.spinner("正在检查并同步知识库......"):
-                VectorStoreService().ensure_vector_store_synced()
-            st.session_state["vector_store_initialized"] = True
+        with st.spinner("正在检查并同步知识库..."):
+            initialize_vector_store_once()
         st.session_state["agent"] = ReactAgent()
     except Exception as exc:
         st.error(f"Agent 初始化失败：{exc}")
         st.stop()
-
-if "message" not in st.session_state:
-    st.session_state["message"] = []
-if "current_user_id" not in st.session_state:
-    st.session_state["current_user_id"] = ""
 
 if st.session_state.get("user_city"):
     if st.session_state.get("user_weather"):
@@ -77,7 +85,9 @@ if st.session_state.get("user_city"):
                 f"当前定位城市：{st.session_state['user_city']} | 当前天气：{st.session_state['user_weather']} | 当前温度：{temperature_text}°C"
             )
         else:
-            st.caption(f"当前定位城市：{st.session_state['user_city']} | 当前天气：{st.session_state['user_weather']}")
+            st.caption(
+                f"当前定位城市：{st.session_state['user_city']} | 当前天气：{st.session_state['user_weather']}"
+            )
     else:
         st.caption(f"当前定位城市：{st.session_state['user_city']}")
 else:
@@ -105,7 +115,9 @@ if prompt:
             st.session_state["message"] = load_user_chat_history(matched_user_id)
             set_user_id(matched_user_id)
 
-            confirm_message = f"已确认您的客户编号为 {matched_user_id}，后续问答会记录到该客户的聊天历史中，请继续提问。"
+            confirm_message = (
+                f"已确认您的客户编号为 {matched_user_id}，后续问答会记录到该客户的聊天历史中，请继续提问。"
+            )
             st.chat_message("assistant").write(confirm_message)
             st.session_state["message"].append({"role": "assistant", "content": confirm_message})
         else:
@@ -114,11 +126,11 @@ if prompt:
         st.rerun()
 
     st.chat_message("user").write(prompt)
-    st.session_state["message"].append({"role":"user","content":prompt})
+    st.session_state["message"].append({"role": "user", "content": prompt})
     append_user_chat_message(current_user_id, "user", prompt)
 
     response_chunks = []
-    with st.spinner("智能客服思考中......"):
+    with st.spinner("智能客服思考中..."):
         res_stream = st.session_state["agent"].execute_stream(get_agent_context_messages())
 
         def capture(generator, cache_list):
@@ -137,6 +149,6 @@ if prompt:
         else:
             full_response = "".join(response_chunks).strip()
             if full_response:
-                st.session_state["message"].append({"role":"assistant","content":full_response})
+                st.session_state["message"].append({"role": "assistant", "content": full_response})
                 append_user_chat_message(current_user_id, "assistant", full_response)
             st.rerun()

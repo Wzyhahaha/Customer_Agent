@@ -1,0 +1,710 @@
+2026-03-23 14:41:29,256 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:41:32,198 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:46:13,178 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:46:18,081 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:47:05,494 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:47:09,285 - agent - INFO - vector_store.py:66 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:49:43,340 - agent - INFO - vector_store.py:80 - [向量库同步]检测到向量库为空或不存在，开始重建知识库
+2026-03-23 14:55:40,633 - agent - INFO - vector_store.py:115 - [向量库同步]检测到向量库为空，开始重建知识库
+2026-03-23 14:55:40,687 - agent - WARNING - vector_store.py:121 - [向量库同步]重置空向量库时文件被占用，改为在现有库上继续构建：[WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\25086\\Desktop\\Agent项目\\chroma_db\\chroma.sqlite3'
+2026-03-23 14:55:42,109 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫地机器人100问.pdf 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 14:55:42,574 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫地机器人100问2.txt 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 14:55:42,604 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫拖一体机器人100问.txt 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 14:55:42,620 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\故障排除.txt 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 14:55:42,625 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\维护保养.txt 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 14:55:42,650 - agent - ERROR - vector_store.py:181 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\选购指南.txt 内容加载失败：HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+PermissionError: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\urllib3\util\retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\rag\vector_store.py", line 177, in load_document
+    self._get_vector_store().add_documents(split_document)
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_core\vectorstores\base.py", line 258, in add_documents
+    return self.add_texts(texts, metadatas, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_chroma\vectorstores.py", line 627, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 155, in embed_documents
+    embeddings = embed_with_retry(
+                 ^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 83, in embed_with_retry
+    return _embed_with_retry(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 331, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\tenacity\__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\langchain_community\embeddings\dashscope.py", line 66, in _embed_with_retry
+    resp = embeddings.client.call(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\embeddings\text_embedding.py", line 52, in call
+    return super().call(
+           ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\client\base_api.py", line 515, in call
+    return request.call()
+           ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 143, in call
+    output = next(response)
+             ^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 501, in _handle_request
+    raise e
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\dashscope\api_entities\http_request.py", line 475, in _handle_request
+    response = session.post(
+               ^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\anaconda3\envs\snake_game\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='dashscope.aliyuncs.com', port=443): Max retries exceeded with url: /api/v1/services/embeddings/text-embedding/text-embedding (Caused by NewConnectionError("HTTPSConnection(host='dashscope.aliyuncs.com', port=443): Failed to establish a new connection: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"))
+2026-03-23 15:00:37,355 - agent - INFO - vector_store.py:115 - [向量库同步]检测到向量库为空，开始重建知识库
+2026-03-23 15:00:41,597 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫地机器人100问.pdf 内容加载成功
+2026-03-23 15:00:44,878 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫地机器人100问2.txt 内容加载成功
+2026-03-23 15:00:50,942 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\扫拖一体机器人100问.txt 内容加载成功
+2026-03-23 15:00:57,957 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\故障排除.txt 内容加载成功
+2026-03-23 15:01:01,534 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\维护保养.txt 内容加载成功
+2026-03-23 15:01:05,699 - agent - INFO - vector_store.py:179 - [加载知识库]C:\Users\25086\Desktop\Agent项目\data\选购指南.txt 内容加载成功
+2026-03-23 15:01:41,383 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有2条消息
+2026-03-23 15:01:41,384 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 我的机器人充不进电了，为什么
+2026-03-23 15:01:49,924 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-23 15:01:49,924 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人充不进电 故障排查'}
+2026-03-23 15:01:51,057 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人充不进电 故障排查\n2. 参考资料(在下一个###之前内容均为参考资料)：【参考资料1】：参考资料：55. 故障现象：充电座指示灯不亮，无法供电；检测：电源线是否插紧，充电座是否损坏，插座是否通电；修复：重新插拔电源线，更换插座，损坏则更换充电座。\n\n56. 故障现象：机器人清扫时将杂物推来推去，吸不进去；检测：吸力是否过低，吸口是否堵塞，主刷是否磨损；修复：调大吸力，清理吸口，更换主刷。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\故障排除.txt\'}\n【参考资料2】：参考资料：扫地/扫拖一体机器人故障检测与修复200条\n\n1. 故障现象：机器人开机无反应，指示灯不亮；检测：检查电源适配器是否插紧、电源线是否破损，电池是否安装到位；修复：更换完好电源线，重新插拔电池，确保充电座通电，若仍无反应联系售后检测主板。\n\n2. 故障现象：开机后立即自动关机；检测：电池电量是否耗尽，机身是否过热，电池是否鼓包；修复：充满电后重试，移至通风处冷却，电池鼓包则立即更换原装电池。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\故障排除.txt\'}\n【参考资料3】：参考资料：190. 故障现象：机器人充电时指示灯正常，但电池充不满；检测：电池是否老化，充电适配器是否功率不足，是否有过充保护；修复：更换电池，使用原装适配器，校准电池。\n\n191. 故障现象：主刷清扫时将灰尘弹起，而非吸入；检测：吸力是否过低，主刷旋转方向是否错误，吸口是否堵塞；修复：调大吸力，检查主刷安装方向，清理吸口。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\故障排除.txt\'}\n\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-23 15:01:55,409 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-23 15:01:55,411 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有4条消息
+2026-03-23 15:01:55,411 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 扫地机器人充不进电的故障排查步骤包括：检查电源线是否插紧、是否破损；确认插座是否通电；查看充电座是否损坏（如指示灯不亮）；确保电池安装到位；若电池鼓包或老化需更换原装电池；使用原装充电适配器；若仍无法充电，可能为主板故障，需联系售后检测。
+2026-03-23 15:06:14,772 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有4条消息
+2026-03-23 15:06:14,772 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 还是没办法解决，没有提示音，指示灯也不亮
+2026-03-23 15:06:22,565 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-23 15:06:22,566 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人充不进电 无指示灯 无提示音 故障排查'}
+2026-03-23 15:06:23,166 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人充不进电 无指示灯 无提示音 故障排查\n2. 参考资料(在下一个###之前内容均为参考资料)：【参考资料1】：参考资料：9. **手动遥控机器人无反应怎么办？**\n- 确认手机和机器人连接正常，退出APP重新进入，检查机器人是否处于“自动清扫”模式，切换为“手动模式”。\n10. **清扫完成后机器人不自动回充？**\n- 检查APP是否关闭“自动回充”功能，确认地图中充电座位置未被修改，清理机器人回充传感器灰尘。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\扫地机器人100问2.txt\'}\n【参考资料2】：参考资料：55. 故障现象：充电座指示灯不亮，无法供电；检测：电源线是否插紧，充电座是否损坏，插座是否通电；修复：重新插拔电源线，更换插座，损坏则更换充电座。\n\n56. 故障现象：机器人清扫时将杂物推来推去，吸不进去；检测：吸力是否过低，吸口是否堵塞，主刷是否磨损；修复：调大吸力，清理吸口，更换主刷。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\故障排除.txt\'}\n【参考资料3】：参考资料：扫地/扫拖一体机器人故障检测与修复200条\n\n1. 故障现象：机器人开机无反应，指示灯不亮；检测：检查电源适配器是否插紧、电源线是否破损，电池是否安装到位；修复：更换完好电源线，重新插拔电池，确保充电座通电，若仍无反应联系售后检测主板。\n\n2. 故障现象：开机后立即自动关机；检测：电池电量是否耗尽，机身是否过热，电池是否鼓包；修复：充满电后重试，移至通风处冷却，电池鼓包则立即更换原装电池。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\故障排除.txt\'}\n\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-23 15:06:28,548 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-23 15:06:28,549 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有6条消息
+2026-03-23 15:06:28,549 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 检查电源适配器是否插紧、电源线是否破损，电池是否安装到位；确认充电座是否通电、电源线是否插紧，插座是否正常供电；若仍无反应，可能需联系售后检测主板或更换充电座。
+2026-03-23 15:07:23,285 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有6条消息
+2026-03-23 15:07:23,285 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 怎么保修
+2026-03-23 15:07:28,434 - agent - INFO - middleware.py:17 - [tool monitor]执行工具：rag_summarize
+2026-03-23 15:07:28,434 - agent - INFO - middleware.py:18 - [tool monitor]传入参数：{'query': '扫地机器人保修政策 保修流程 保修所需材料'}
+2026-03-23 15:07:28,674 - agent - DEBUG - rag_service.py:13 - [rag_prompt]text='你是专注于"基于参考资料总结"的AI助手，需结合用户提问和向量检索到的参考资料，生成简洁准确的概括回答。\n\n### 输入信息\n1. 用户提问：扫地机器人保修政策 保修流程 保修所需材料\n2. 参考资料(在下一个###之前内容均为参考资料)：【参考资料1】：参考资料：### 售后与升级类\n91. **如何判断扫拖一体机器人是否仍在保修期内？** | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\扫拖一体机器人100问.txt\'}\n【参考资料2】：参考资料：- 在保修期内，若故障属于非人为、非耗材、非外力损坏，通常可申请免费维修或更换部件。常见可保修情形包括主板、电源板等电路故障，水泵、电机、风机等核心部件异常，传感器失灵、误报、无法识别水箱或拖布模组，拖地模组、电控模组在正常使用下失效，以及软件升级后出现系统异常且恢复设置后仍无法解决等情况。机器在正常地面环境中出现异常停机、无法回充、无法建图等非外因故障，也可能纳入保修 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\扫拖一体机器人100问.txt\'}\n【参考资料3】：参考资料：# 扫地机器人+扫拖一体机器人 维护保养200条（纯保养维度，分通用基础/扫地专属/扫拖一体拖地专属/耗材专项/环境适配/长期存放/故障预防，覆盖全机型日常维护）\n## 通用基础维护（50条）\n1. 每日使用后，用干软布擦拭机器人机身外壳，去除灰尘、水渍，避免污渍附着硬化。\n2. 每次清扫完成，及时清理机身防撞条缝隙的毛发、线头，防止卡扣卡顿影响回弹。 | 参考元数据：{\'source\': \'C:\\\\Users\\\\25086\\\\Desktop\\\\Agent项目\\\\data\\\\维护保养.txt\'}\n\n\n### 严格遵守以下约束（违反将导致回答无效）\n1. 内容合规：禁止包含违法、侵权、攻击性信息；\n2. 事实准确：回答必须完全基于参考资料中的信息，不编造、不添加未提及的内容，不做主观推断；\n3. 语言要求：仅用中文回答，语气客观、简洁，不冗余；\n4. 聚焦提问：严格围绕用户原始提问总结，不扩充问题范围、不额外追问、不构造新query；\n5. 格式要求：仅输出概括内容本身，以纯文本字符串形式呈现，不封装为字典、列表、JSON等任何结构，不附带额外说明。\n'
+2026-03-23 15:07:33,964 - agent - INFO - middleware.py:22 - [tool monitor]工具rag_summarize调用成功
+2026-03-23 15:07:33,966 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有8条消息
+2026-03-23 15:07:33,966 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.tool.ToolMessage'>| 扫地机器人在保修期内，若故障属于非人为、非耗材、非外力损坏，可申请免费维修或更换部件。可保修情形包括主板、电源板等电路故障，水泵、电机、风机等核心部件异常，传感器失灵或误报，拖地模组、电控模组在正常使用下失效，软件升级后系统异常且恢复设置无效，以及在正常地面环境中出现异常停机、无法回充、无法建图等非外因故障。判断是否在保修期内需参考具体产品信息。保修所需材料未在参考资料中提及。
+2026-03-23 15:44:43,743 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有8条消息
+2026-03-23 15:44:43,744 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 没有发票还能保修吗
+2026-03-23 15:45:33,919 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有10条消息
+2026-03-23 15:45:33,920 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 进水后还能免费维修吗
+2026-03-23 17:06:04,984 - agent - ERROR - file_handler.py:91 - [jsonl_loader]读取 data/questions/???????????????.jsonl 失败
+Traceback (most recent call last):
+  File "C:\Users\25086\Desktop\Agent项目\utils\file_handler.py", line 60, in jsonl_loader
+    with open(filepath, "r", encoding="utf-8-sig") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: 'data/questions/???????????????.jsonl'
