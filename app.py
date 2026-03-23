@@ -8,6 +8,16 @@ from rag.vector_store import VectorStoreService
 from utils.amap_service import AMapServiceError, get_location_snapshot
 from utils.chat_history import append_user_chat_message, load_user_chat_history
 from utils.city_locator_component import locate_city
+from utils.issue_handler import (
+    PROCESSING,
+    is_resolution_message,
+    load_user_issue_state,
+    mark_issue_escalated,
+    mark_issue_resolved,
+    record_assistant_solution,
+    should_escalate_to_human,
+    start_or_continue_issue,
+)
 from utils.runtime_context import (
     set_user_city,
     set_user_id,
@@ -28,6 +38,14 @@ def get_agent_context_messages() -> list[dict[str, str]]:
 def initialize_vector_store_once():
     VectorStoreService.ensure_all_vector_stores_synced()
     return True
+
+
+def append_and_render_assistant_message(user_id: str, message: str, persist_as_solution: bool = False):
+    st.chat_message("assistant").write(message)
+    st.session_state["message"].append({"role": "assistant", "content": message})
+    append_user_chat_message(user_id, "assistant", message)
+    if persist_as_solution:
+        record_assistant_solution(user_id, message)
 
 
 st.title("智扫通机器人智能客服")
@@ -95,8 +113,13 @@ else:
     if st.session_state.get("location_error"):
         st.warning(f"定位失败原因：{st.session_state['location_error']}")
 
-if st.session_state.get("current_user_id"):
-    st.caption(f"当前客户编号：{st.session_state['current_user_id']}")
+current_user_id = st.session_state.get("current_user_id", "")
+if current_user_id:
+    st.caption(f"当前客户编号：{current_user_id}")
+    issue_state = load_user_issue_state(current_user_id)
+    active_issue = issue_state.get("active_issue")
+    if active_issue:
+        st.caption(f"当前问题状态：{active_issue.get('status', PROCESSING)}")
 else:
     st.info(f"请先提供客户编号后再提问，支持的编号范围：{user_ids[0]} - {user_ids[-1]}")
 
@@ -129,6 +152,27 @@ if prompt:
     st.session_state["message"].append({"role": "user", "content": prompt})
     append_user_chat_message(current_user_id, "user", prompt)
 
+    issue = start_or_continue_issue(current_user_id, prompt)
+
+    if is_resolution_message(prompt):
+        mark_issue_resolved(current_user_id, prompt)
+        append_and_render_assistant_message(
+            current_user_id,
+            "已为您将该问题标记为已解决。如果还有其他问题，可以继续咨询。",
+        )
+        st.rerun()
+
+    if should_escalate_to_human(issue):
+        escalated_issue = mark_issue_escalated(current_user_id)
+        summary_text = ""
+        if escalated_issue:
+            summary_text = escalated_issue.get("summary", "")
+        handoff_message = "该问题已为您标记为升级人工，请转接人工客服继续处理。"
+        if summary_text:
+            handoff_message += f"\n\n问题摘要：{summary_text}"
+        append_and_render_assistant_message(current_user_id, handoff_message)
+        st.rerun()
+
     response_chunks = []
     with st.spinner("智能客服思考中..."):
         res_stream = st.session_state["agent"].execute_stream(get_agent_context_messages())
@@ -149,6 +193,9 @@ if prompt:
         else:
             full_response = "".join(response_chunks).strip()
             if full_response:
-                st.session_state["message"].append({"role": "assistant", "content": full_response})
-                append_user_chat_message(current_user_id, "assistant", full_response)
+                append_and_render_assistant_message(
+                    current_user_id,
+                    full_response,
+                    persist_as_solution=True,
+                )
             st.rerun()

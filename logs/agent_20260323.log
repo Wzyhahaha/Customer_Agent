@@ -715,3 +715,5 @@ OSError: [Errno 22] Invalid argument: 'data/questions/???????????????.jsonl'
 2026-03-23 21:32:38,031 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\故障排除.txt 加载成功
 2026-03-23 21:32:42,664 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\维护保养.txt 加载成功
 2026-03-23 21:32:46,664 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\选购指南.txt 加载成功
+2026-03-23 21:44:59,162 - agent - INFO - middleware.py:36 - [log_before_model]即将调用模型，带有12条消息
+2026-03-23 21:44:59,162 - agent - DEBUG - middleware.py:47 - [log_before_model]<class 'langchain_core.messages.human.HumanMessage'>| 小孩把水弄进机器人里面了，这个可以保修吗
