@@ -708,3 +708,10 @@ Traceback (most recent call last):
     with open(filepath, "r", encoding="utf-8-sig") as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 OSError: [Errno 22] Invalid argument: 'data/questions/???????????????.jsonl'
+2026-03-23 21:31:53,342 - agent - INFO - vector_store.py:176 - [向量库同步][question_recall] 检测到向量库为空，开始重建知识库
+2026-03-23 21:32:07,028 - agent - INFO - vector_store.py:235 - [加载知识库][question_recall] C:\Users\25086\Desktop\Agent项目\data/questions\扫地机器人售后高频政策问法清单.jsonl 加载成功
+2026-03-23 21:32:25,843 - agent - INFO - vector_store.py:235 - [加载知识库][question_recall] C:\Users\25086\Desktop\Agent项目\data/questions\机器人FAQ知识库_合并版.jsonl 加载成功
+2026-03-23 21:32:25,938 - agent - INFO - vector_store.py:176 - [向量库同步][policy_answer] 检测到向量库为空，开始重建知识库
+2026-03-23 21:32:38,031 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\故障排除.txt 加载成功
+2026-03-23 21:32:42,664 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\维护保养.txt 加载成功
+2026-03-23 21:32:46,664 - agent - INFO - vector_store.py:235 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目\data/policies\选购指南.txt 加载成功
