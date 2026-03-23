@@ -86,6 +86,8 @@ def start_or_continue_issue(user_id: str, user_message: str) -> dict[str, Any]:
             "status": PROCESSING,
             "created_at": _now_text(),
             "updated_at": _now_text(),
+            "cause_inquiry_sent": False,
+            "troubleshooting_attempts": 0,
             "user_messages": [],
             "assistant_messages": [],
             "summary": "",
@@ -105,6 +107,26 @@ def start_or_continue_issue(user_id: str, user_message: str) -> dict[str, Any]:
     return active_issue
 
 
+def should_request_cause(issue: dict[str, Any] | None) -> bool:
+    if not issue or issue.get("status") != PROCESSING:
+        return False
+    return not bool(issue.get("cause_inquiry_sent"))
+
+
+def mark_cause_inquiry_sent(user_id: str, assistant_message: str) -> dict[str, Any] | None:
+    states = _load_all_issue_states()
+    bucket = _ensure_user_bucket(states, user_id)
+    active_issue = _find_issue(bucket, bucket.get("active_issue_id", ""))
+    if not active_issue or active_issue.get("status") != PROCESSING:
+        return None
+
+    active_issue["cause_inquiry_sent"] = True
+    active_issue["cause_inquiry_message"] = (assistant_message or "").strip()
+    active_issue["updated_at"] = _now_text()
+    _save_all_issue_states(states)
+    return active_issue
+
+
 def record_assistant_solution(user_id: str, assistant_message: str) -> dict[str, Any] | None:
     states = _load_all_issue_states()
     bucket = _ensure_user_bucket(states, user_id)
@@ -118,25 +140,19 @@ def record_assistant_solution(user_id: str, assistant_message: str) -> dict[str,
             "timestamp": _now_text(),
         }
     )
+    active_issue["troubleshooting_attempts"] = len(active_issue["assistant_messages"])
     active_issue["updated_at"] = _now_text()
     _save_all_issue_states(states)
     return active_issue
 
 
-def get_active_issue(user_id: str) -> dict[str, Any] | None:
-    state = load_user_issue_state(user_id)
-    return state.get("active_issue")
-
-
 def should_escalate_to_human(issue: dict[str, Any] | None) -> bool:
     if not issue or issue.get("status") != PROCESSING:
         return False
-    user_turns = len(issue.get("user_messages", []))
-    assistant_turns = len(issue.get("assistant_messages", []))
-    return assistant_turns >= 2 and user_turns >= 3
+    return int(issue.get("troubleshooting_attempts", 0)) >= 3
 
 
-def _truncate_text(text: str, max_len: int = 80) -> str:
+def _truncate_text(text: str, max_len: int = 48) -> str:
     text = (text or "").strip()
     if len(text) <= max_len:
         return text
@@ -144,25 +160,13 @@ def _truncate_text(text: str, max_len: int = 80) -> str:
 
 
 def build_issue_summary(issue: dict[str, Any]) -> str:
-    first_question = ""
-    latest_feedback = ""
-    if issue.get("user_messages"):
-        first_question = issue["user_messages"][0].get("content", "")
-        latest_feedback = issue["user_messages"][-1].get("content", "")
+    user_messages = issue.get("user_messages", [])
+    first_question = user_messages[0].get("content", "") if user_messages else ""
+    latest_feedback = user_messages[-1].get("content", "") if user_messages else ""
 
-    solution_parts = []
-    for index, item in enumerate(issue.get("assistant_messages", [])[:2], start=1):
-        content = _truncate_text(item.get("content", ""))
-        if content:
-            solution_parts.append(f"方案{index}：{content}")
-
-    summary_parts = [
-        f"问题首述：{_truncate_text(first_question) or '无'}",
-        f"最近反馈：{_truncate_text(latest_feedback) or '无'}",
-    ]
-    summary_parts.extend(solution_parts)
-    summary_parts.append("当前状态：升级人工")
-    return "；".join(summary_parts)
+    if latest_feedback and latest_feedback != first_question:
+        return f"客户反馈：{_truncate_text(first_question)}；补充说明：{_truncate_text(latest_feedback)}。"
+    return f"客户反馈：{_truncate_text(first_question) or '问题待人工进一步确认'}。"
 
 
 def mark_issue_resolved(user_id: str, resolution_message: str) -> dict[str, Any] | None:

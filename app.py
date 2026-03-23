@@ -5,6 +5,7 @@ import streamlit as st
 from agent.react_agent import ReactAgent
 from agent.tools.agent_tools import extract_user_id, user_ids
 from rag.vector_store import VectorStoreService
+from utils.after_sales_service import build_after_sales_message
 from utils.amap_service import AMapServiceError, get_location_snapshot
 from utils.chat_history import append_user_chat_message, load_user_chat_history
 from utils.city_locator_component import locate_city
@@ -12,10 +13,12 @@ from utils.issue_handler import (
     PROCESSING,
     is_resolution_message,
     load_user_issue_state,
+    mark_cause_inquiry_sent,
     mark_issue_escalated,
     mark_issue_resolved,
     record_assistant_solution,
     should_escalate_to_human,
+    should_request_cause,
     start_or_continue_issue,
 )
 from utils.runtime_context import (
@@ -40,12 +43,19 @@ def initialize_vector_store_once():
     return True
 
 
-def append_and_render_assistant_message(user_id: str, message: str, persist_as_solution: bool = False):
-    st.chat_message("assistant").write(message)
+def append_and_render_assistant_message(
+    user_id: str,
+    message: str,
+    persist_as_solution: bool = False,
+    mark_as_cause_inquiry: bool = False,
+):
+    st.chat_message("assistant").markdown(message)
     st.session_state["message"].append({"role": "assistant", "content": message})
     append_user_chat_message(user_id, "assistant", message)
     if persist_as_solution:
         record_assistant_solution(user_id, message)
+    if mark_as_cause_inquiry:
+        mark_cause_inquiry_sent(user_id, message)
 
 
 st.title("智扫通机器人智能客服")
@@ -75,6 +85,7 @@ if isinstance(location_result, dict):
                 else:
                     st.session_state["user_coords"] = current_coords
                     st.session_state["user_city"] = snapshot["city"]
+                    st.session_state["user_province"] = snapshot["province"]
                     st.session_state["user_weather"] = snapshot["weather"]
                     st.session_state["user_temperature"] = snapshot["temperature"]
                     st.session_state["location_error"] = ""
@@ -124,14 +135,14 @@ else:
     st.info(f"请先提供客户编号后再提问，支持的编号范围：{user_ids[0]} - {user_ids[-1]}")
 
 for message in st.session_state["message"]:
-    st.chat_message(message["role"]).write(message["content"])
+    st.chat_message(message["role"]).markdown(message["content"])
 
 prompt = st.chat_input()
 
 if prompt:
     current_user_id = st.session_state.get("current_user_id", "")
     if not current_user_id:
-        st.chat_message("user").write(prompt)
+        st.chat_message("user").markdown(prompt)
         matched_user_id = extract_user_id(prompt)
         if matched_user_id:
             st.session_state["current_user_id"] = matched_user_id
@@ -141,14 +152,14 @@ if prompt:
             confirm_message = (
                 f"已确认您的客户编号为 {matched_user_id}，后续问答会记录到该客户的聊天历史中，请继续提问。"
             )
-            st.chat_message("assistant").write(confirm_message)
+            st.chat_message("assistant").markdown(confirm_message)
             st.session_state["message"].append({"role": "assistant", "content": confirm_message})
         else:
             invalid_message = "请先提供有效的客户编号。客户编号必须是 user_ids 中的一个，例如 1001。"
-            st.chat_message("assistant").write(invalid_message)
+            st.chat_message("assistant").markdown(invalid_message)
         st.rerun()
 
-    st.chat_message("user").write(prompt)
+    st.chat_message("user").markdown(prompt)
     st.session_state["message"].append({"role": "user", "content": prompt})
     append_user_chat_message(current_user_id, "user", prompt)
 
@@ -167,10 +178,24 @@ if prompt:
         summary_text = ""
         if escalated_issue:
             summary_text = escalated_issue.get("summary", "")
-        handoff_message = "该问题已为您标记为升级人工，请转接人工客服继续处理。"
-        if summary_text:
-            handoff_message += f"\n\n问题摘要：{summary_text}"
-        append_and_render_assistant_message(current_user_id, handoff_message)
+        after_sales_message = build_after_sales_message(
+            st.session_state.get("user_province", ""),
+            summary_text,
+        )
+        append_and_render_assistant_message(current_user_id, after_sales_message)
+        st.rerun()
+
+    if should_request_cause(issue):
+        cause_message = (
+            "已为您将该问题标记为处理中。"
+            "请先告诉我导致这个问题发生的原因、出现前做过什么操作，以及目前的具体现象，"
+            "我会先帮您排除障碍。"
+        )
+        append_and_render_assistant_message(
+            current_user_id,
+            cause_message,
+            mark_as_cause_inquiry=True,
+        )
         st.rerun()
 
     response_chunks = []
