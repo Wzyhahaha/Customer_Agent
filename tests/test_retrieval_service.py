@@ -39,6 +39,18 @@ class TestTypedRetrievalService(unittest.TestCase):
         self.assertEqual(len(bundle.policy_docs), 1)
         self.assertEqual(len(bundle.troubleshooting_docs), 1)
 
+    def test_other_query_skips_structured_stores(self):
+        question = FakeRetriever([Document(page_content="相似问法", metadata={})])
+        policy = FakeRetriever([])
+        troubleshooting = FakeRetriever([])
+
+        service = TypedRetrievalService(question_retriever=question, policy_retriever=policy, troubleshooting_retriever=troubleshooting)
+        bundle = service.retrieve("谢谢，已经解决了")
+
+        self.assertEqual(bundle.route.route, "other")
+        self.assertEqual(policy.queries, [])
+        self.assertEqual(troubleshooting.queries, [])
+
 
 if __name__ == "__main__":
     unittest.main()

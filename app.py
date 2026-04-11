@@ -28,7 +28,7 @@ from utils.runtime_context import (
     set_user_weather,
 )
 
-
+# 传给 Agent 的上下文只保留最近若干轮，避免会话越来越长。
 MAX_CONTEXT_MESSAGES = 12
 
 
@@ -39,6 +39,7 @@ def get_agent_context_messages() -> list[dict[str, str]]:
 
 @st.cache_resource(show_spinner=False)
 def initialize_vector_store_once():
+    # Streamlit 会缓存这个资源，避免每次页面刷新都重新检查/构建向量库。
     VectorStoreService.ensure_all_vector_stores_synced()
     return True
 
@@ -49,6 +50,7 @@ def append_and_render_assistant_message(
     persist_as_solution: bool = False,
     mark_as_cause_inquiry: bool = False,
 ):
+    # 统一处理“显示回复 + 写入 session + 持久化 + 更新问题状态”。
     st.chat_message("assistant").markdown(message)
     st.session_state["message"].append({"role": "assistant", "content": message})
     append_user_chat_message(user_id, "assistant", message)
@@ -66,6 +68,7 @@ if "message" not in st.session_state:
 if "current_user_id" not in st.session_state:
     st.session_state["current_user_id"] = ""
 
+# 前端组件先拿经纬度，再由后端补全城市、天气、省份等信息。
 location_result = locate_city()
 if isinstance(location_result, dict):
     if location_result.get("status") == "success":
@@ -99,6 +102,7 @@ set_user_id(st.session_state.get("current_user_id", ""))
 
 if "agent" not in st.session_state:
     try:
+        # Agent 初始化之前，先确保本地知识文件已经同步进 Chroma 向量库。
         with st.spinner("正在检查并同步知识库..."):
             initialize_vector_store_once()
         st.session_state["agent"] = ReactAgent()
@@ -142,6 +146,7 @@ prompt = st.chat_input()
 if prompt:
     current_user_id = st.session_state.get("current_user_id", "")
     if not current_user_id:
+        # 用户第一次发言必须先提供客户编号，系统再加载该客户的历史上下文。
         st.chat_message("user").markdown(prompt)
         matched_user_id = extract_user_id(prompt)
         if matched_user_id:
@@ -163,6 +168,7 @@ if prompt:
     st.session_state["message"].append({"role": "user", "content": prompt})
     append_user_chat_message(current_user_id, "user", prompt)
 
+    # 每条用户消息都要归档到“当前问题单”，供后续判断已解决/升级人工。
     issue = start_or_continue_issue(current_user_id, prompt)
 
     if is_resolution_message(prompt):
@@ -203,6 +209,7 @@ if prompt:
         res_stream = st.session_state["agent"].execute_stream(get_agent_context_messages())
 
         def capture(generator, cache_list):
+            # Agent 返回增量文本块；这里一边缓存完整回答，一边模拟逐字输出。
             for chunk in generator:
                 if not chunk:
                     continue

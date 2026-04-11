@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
 
 if TYPE_CHECKING:
     from rag.query_router import QueryRoute, QueryRouter
@@ -20,9 +21,9 @@ class RetrievalBundle:
 class TypedRetrievalService:
     def __init__(
         self,
-        question_retriever=None,
-        policy_retriever=None,
-        troubleshooting_retriever=None,
+        question_retriever: Any = None,
+        policy_retriever: Any = None,
+        troubleshooting_retriever: Any = None,
         router: "QueryRouter | None" = None,
     ):
         self._router = router
@@ -39,7 +40,7 @@ class TypedRetrievalService:
         return self._router
 
     @property
-    def question_retriever(self):
+    def question_retriever(self) -> BaseRetriever:
         if self._question_retriever is None:
             from rag.vector_store import VectorStoreService
 
@@ -47,7 +48,7 @@ class TypedRetrievalService:
         return self._question_retriever
 
     @property
-    def policy_retriever(self):
+    def policy_retriever(self) -> BaseRetriever:
         if self._policy_retriever is None:
             from rag.vector_store import VectorStoreService
 
@@ -55,7 +56,7 @@ class TypedRetrievalService:
         return self._policy_retriever
 
     @property
-    def troubleshooting_retriever(self):
+    def troubleshooting_retriever(self) -> BaseRetriever:
         if self._troubleshooting_retriever is None:
             from rag.vector_store import VectorStoreService
 
@@ -64,9 +65,19 @@ class TypedRetrievalService:
 
     def retrieve(self, query: str) -> RetrievalBundle:
         route = self.router.route(query)
-        question_docs = self.question_retriever.invoke(query)
+        question_docs: list[Document] = self.question_retriever.invoke(query)
         policy_docs: list[Document] = []
         troubleshooting_docs: list[Document] = []
+
+        # other 路由只检索相似问法，不检索结构化知识库
+        if route.route == "other":
+            return RetrievalBundle(
+                query=query,
+                route=route,
+                question_docs=question_docs,
+                policy_docs=[],
+                troubleshooting_docs=[],
+            )
 
         if route.route in {"policy", "mixed"}:
             policy_docs = self.policy_retriever.invoke(query)

@@ -17,6 +17,7 @@ from utils.runtime_context import (
     get_user_id as get_confirmed_user_id,
 )
 
+# RAG 服务延迟初始化，避免模块导入时就加载向量检索相关资源。
 rag = None
 
 user_ids = ["1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009", "1010"]
@@ -29,6 +30,7 @@ USER_IDS_SET = set(user_ids)
 
 
 def extract_user_id(text: str) -> str:
+    # 只接受白名单中的 4 位客户编号，降低误识别概率。
     if not text:
         return ""
 
@@ -54,6 +56,7 @@ def rag_summarize(query: str) -> str:
 
 @tool(description="获取指定城市的天气，以消息字符串的形式返回")
 def get_weather(city: str) -> str:
+    # 优先复用页面层已经查到的天气结果，避免工具层再次访问外部接口。
     user_city = get_user_city()
     user_weather = get_user_weather()
     user_temperature = get_user_temperature()
@@ -88,11 +91,13 @@ def get_user_id() -> str:
 
 @tool(description="获取当前月份，以纯字符串返回")
 def get_current_month() -> str:
+    # 这里服务的是演示数据集，所以月份来自预设列表而非系统时钟。
     return random.choice(month_arr)
 
 
 def generate_external_data() -> dict[str, dict[str, dict[str, str]]]:
     if not external_data:
+        # 外部 CSV 第一次访问时读入内存，后续报告查询直接复用缓存。
         external_data_path = get_abs_path(agent_conf["external_data_path"])
         if not os.path.exists(external_data_path):
             raise FileNotFoundError(f"外部数据文件{external_data_path}不存在")
@@ -137,6 +142,7 @@ def fetch_external_data(user_id: str, month: str) -> str:
 
 @tool(description="无入参，无返回值，调用后触发中间件自动为报告生成的场景动态注入上下文信息，为后续提示词切换提供上下文信息")
 def fill_context_for_report() -> str:
+    # 这个工具本身不做业务，只是作为“切到报告模式”的触发信号。
     return "fill_context_for_report已调用"
 
 
