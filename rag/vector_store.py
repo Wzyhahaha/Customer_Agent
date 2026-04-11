@@ -25,6 +25,7 @@ from utils.path_tool import get_abs_path
 
 class VectorStoreService:
     def __init__(self, store_name: str | None = None):
+        # store_name 对应 config/chroma.yml 里的一类知识库配置。
         self.store_name = store_name or chroma_conf.get("default_store", "policy_answer")
         store_conf = (chroma_conf.get("stores") or {}).get(self.store_name)
         if not store_conf:
@@ -39,6 +40,7 @@ class VectorStoreService:
         self.allowed_types = tuple(store_conf.get("allow_knowledge_file_type", ["txt", "pdf"]))
         self.vector_store = None
 
+        # 所有文档统一分片后再入库，便于不同格式知识源走同一套流程。
         self.spliter = RecursiveCharacterTextSplitter(
             chunk_size=chroma_conf["chunk_size"],
             chunk_overlap=chroma_conf["chunk_overlap"],
@@ -46,8 +48,19 @@ class VectorStoreService:
             length_function=len,
         )
 
+    def _prepare_documents_for_store(self, documents: list[Document]) -> list[Document]:
+        """根据 store 类型决定是否切分文档。
+
+        policy_rules 和 troubleshooting_cases 使用结构化知识，直接入库不切分。
+        其他 store 类型使用传统的分片逻辑。
+        """
+        if self.store_mode in {"policy_rules", "troubleshooting_cases"}:
+            return documents
+        return self.spliter.split_documents(documents)
+
     @classmethod
     def ensure_all_vector_stores_synced(cls):
+        # 应用启动时批量同步所有向量库，避免首问时才发现知识库未就绪。
         for store_name in (chroma_conf.get("stores") or {}):
             service = cls(store_name)
             try:
@@ -68,6 +81,7 @@ class VectorStoreService:
         return self.vector_store
 
     def _get_collection_count(self) -> int:
+        # 直接查看 Chroma 的 sqlite 数据量，快速判断库是否为空。
         sqlite_path = os.path.join(self.persist_directory, "chroma.sqlite3")
         if not os.path.exists(sqlite_path):
             return 0
@@ -122,6 +136,7 @@ class VectorStoreService:
             category = str(metadata.get("category") or "").strip()
 
             if self.store_mode == "question_recall":
+                # 相似问法库侧重语义召回，把意图/分类拼进正文更容易命中。
                 parts = [question or doc.page_content]
                 if intent:
                     parts.append(f"意图：{intent}")
@@ -129,6 +144,7 @@ class VectorStoreService:
                     parts.append(f"分类：{category}")
                 page_content = "\n".join(part for part in parts if part)
             else:
+                # 政策库侧重回答依据，因此保留问题、答案和处理提示。
                 parts = []
                 if question:
                     parts.append(f"问题：{question}")
@@ -159,6 +175,10 @@ class VectorStoreService:
         return self._get_vector_store().as_retriever(search_kwargs={"k": self.k})
 
     def ensure_vector_store_synced(self):
+        # 同步规则：
+        # 1. 库不存在 -> 全量构建
+        # 2. 库为空 -> 重建
+        # 3. 库已存在 -> 基于 md5 做增量导入
         sqlite_path = os.path.join(self.persist_directory, "chroma.sqlite3")
         has_md5_store = os.path.exists(self.md5_hex_store)
         document_count = self._get_collection_count()
@@ -220,17 +240,19 @@ class VectorStoreService:
                 continue
 
             try:
+                # 不同来源的知识文件先转为 Document，再统一分片和写入向量库。
                 documents = self._load_file_documents(path)
                 if not documents:
                     logger.warning(f"[加载知识库][{self.store_name}] {path} 没有有效内容，跳过")
                     continue
 
-                split_document = self.spliter.split_documents(documents)
-                if not split_document:
-                    logger.warning(f"[加载知识库][{self.store_name}] {path} 分片后为空，跳过")
+                # 根据 store 类型决定是否切分文档
+                prepared_documents = self._prepare_documents_for_store(documents)
+                if not prepared_documents:
+                    logger.warning(f"[加载知识库][{self.store_name}] {path} 处理后为空，跳过")
                     continue
 
-                self._get_vector_store().add_documents(split_document)
+                self._get_vector_store().add_documents(prepared_documents)
                 save_md5_hex(md5_hex)
                 logger.info(f"[加载知识库][{self.store_name}] {path} 加载成功")
             except Exception as exc:

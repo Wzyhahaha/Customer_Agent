@@ -19,6 +19,24 @@ stores:
     k: 4
     mode: policy_answer
 
+  policy_rules:
+    collection_name: policy_rules
+    persist_directory: chroma_db/policy_rules
+    data_path: data/structured_policies
+    md5_hex_store: md5_policy_rules.text
+    allow_knowledge_file_type: ["jsonl"]
+    k: 4
+    mode: policy_rules
+
+  troubleshooting_cases:
+    collection_name: troubleshooting_cases
+    persist_directory: chroma_db/troubleshooting_cases
+    data_path: data/structured_policies
+    md5_hex_store: md5_troubleshooting_cases.text
+    allow_knowledge_file_type: ["jsonl"]
+    k: 4
+    mode: troubleshooting_cases
+
 chunk_size: 200
 chunk_overlap: 20
 separators: ["\n\n", "\n", "。", "；", "，", ".", "!", "?"]
