@@ -27,6 +27,7 @@ def _save_all_histories(histories: dict[str, list[dict[str, Any]]]) -> None:
 
 
 def load_user_chat_history(user_id: str) -> list[dict[str, str]]:
+    # 页面层和 Agent 只需要 role/content，因此这里做一次轻量清洗。
     histories = _load_all_histories()
     history = histories.get(user_id, [])
     messages: list[dict[str, str]] = []
@@ -39,6 +40,7 @@ def load_user_chat_history(user_id: str) -> list[dict[str, str]]:
 
 
 def append_user_chat_message(user_id: str, role: str, content: str) -> None:
+    # 聊天记录按用户 ID 分桶，切换客户时就能恢复对应上下文。
     role = (role or "").strip()
     content = (content or "").strip()
     if role not in {"user", "assistant"} or not content:

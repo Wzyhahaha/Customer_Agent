@@ -3,7 +3,7 @@ RAG 检索评估模块。
 
 测试集中的每条样本显式标注：
 1. expected_question_refs: 期望命中的问题库文档
-2. expected_policy_sections: 期望命中的政策分区
+2. expected_domain_sections: 期望命中的知识域分区（domain:section）
 
 输出指标：
 1. Recall@K: top-k 中命中的相关目标数 / 标注相关目标总数
@@ -41,7 +41,12 @@ def load_test_queries() -> list[dict[str, Any]]:
                 continue
 
             case = json.loads(raw)
-            required_fields = ("query", "expected_question_refs", "expected_policy_sections")
+            required_fields = (
+                "query",
+                "expected_route",
+                "expected_question_refs",
+                "expected_domain_sections",
+            )
             missing_fields = [field for field in required_fields if field not in case]
             if missing_fields:
                 raise ValueError(
@@ -138,6 +143,18 @@ class PolicySectionResolver:
         if explicit_category:
             return explicit_category
 
+        explicit_scene = str(metadata.get("scene") or "").strip()
+        if explicit_scene:
+            return explicit_scene
+
+        explicit_section = str(metadata.get("section") or "").strip()
+        if explicit_section:
+            return explicit_section
+
+        explicit_topic = str(metadata.get("topic") or "").strip()
+        if explicit_topic:
+            return explicit_topic
+
         chunk_heading = self._extract_heading_from_chunk(doc.page_content)
         if chunk_heading:
             return chunk_heading
@@ -204,6 +221,16 @@ class StageStats:
         )
 
 
+@dataclass
+class RouteStats:
+    correct_queries: int = 0
+    total_queries: int = 0
+
+    @property
+    def accuracy(self) -> float:
+        return self.correct_queries / self.total_queries if self.total_queries else 0.0
+
+
 def _format_ratio(numerator: int, denominator: int) -> str:
     return f"{numerator}/{denominator}" if denominator else "0/0"
 
@@ -231,6 +258,26 @@ def _print_stage_summary(stats: StageStats, top_k: int):
     print(f"F1@{top_k}:        {stats.f1_at_k:.1%}")
 
 
+def _print_route_summary(stats: RouteStats):
+    print("\n" + "=" * 70)
+    print("路由评估结果")
+    print("=" * 70)
+    print(
+        f"Accuracy: {_format_ratio(stats.correct_queries, stats.total_queries)}"
+        f" = {stats.accuracy:.1%}"
+    )
+
+
+def _get_retriever_k(service: Any, *attr_names: str) -> int:
+    values = []
+    for attr_name in attr_names:
+        retriever = getattr(service, attr_name, None)
+        search_kwargs = getattr(retriever, "search_kwargs", None)
+        if isinstance(search_kwargs, dict):
+            values.append(int(search_kwargs.get("k", 0)))
+    return max(values) if values else 0
+
+
 def evaluate():
     """评估两阶段检索效果。"""
     retrieval_service = TypedRetrievalService()
@@ -238,33 +285,46 @@ def evaluate():
     test_queries = load_test_queries()
 
     question_stats = StageStats(name="问题库")
-    policy_stats = StageStats(name="政策库")
+    domain_stats = StageStats(name="知识域")
+    route_stats = RouteStats()
     joint_hit_queries = 0
     details: list[dict[str, Any]] = []
+    question_k = _get_retriever_k(retrieval_service, "question_retriever")
+    domain_k = _get_retriever_k(
+        retrieval_service,
+        "policy_retriever",
+        "troubleshooting_retriever",
+        "maintenance_retriever",
+    )
 
     print("=" * 70)
     print("RAG 两阶段检索评估")
     print("=" * 70)
     print(f"测试集文件: {TEST_FILE}")
     print(f"样本数: {len(test_queries)}")
-    print(f"问题库 K: {retrieval_service.question_retriever.search_kwargs.get('k', 'N/A')}")
-    print(f"政策库 K: {retrieval_service.policy_retriever.search_kwargs.get('k', 'N/A')}")
+    print(f"问题库 K: {question_k or 'N/A'}")
+    print(f"知识域 K: {domain_k or 'N/A'}")
 
     for index, case in enumerate(test_queries, start=1):
         query = str(case["query"]).strip()
         case_name = str(case.get("name") or f"case-{index}")
+        expected_route = str(case["expected_route"]).strip()
 
         expected_question_refs = {
             normalize_question_ref(ref) for ref in case["expected_question_refs"]
         }
-        expected_policy_sections = {
+        expected_domain_sections = {
             str(section).strip()
-            for section in case["expected_policy_sections"]
+            for section in case["expected_domain_sections"]
             if str(section).strip()
         }
 
         # 使用 TypedRetrievalService 进行检索
         bundle = retrieval_service.retrieve(query)
+        actual_route = bundle.route.route
+        route_correct = actual_route == expected_route
+        route_stats.correct_queries += int(route_correct)
+        route_stats.total_queries += 1
 
         question_docs = bundle.question_docs
         retrieved_question_refs = [
@@ -273,31 +333,33 @@ def evaluate():
         retrieved_question_ref_set = set(retrieved_question_refs)
         matched_question_refs = sorted(expected_question_refs & retrieved_question_ref_set)
 
-        routed_policy_docs = bundle.policy_docs
-        routed_troubleshooting_docs = bundle.troubleshooting_docs
-        merged_domain_docs = routed_policy_docs + routed_troubleshooting_docs
-
-        retrieved_policy_sections = [
-            resolver.resolve(doc) or "(未识别分区)" for doc in merged_domain_docs
+        domain_docs = (
+            [("policy", doc) for doc in bundle.policy_docs]
+            + [("troubleshooting", doc) for doc in bundle.troubleshooting_docs]
+            + [("maintenance", doc) for doc in bundle.maintenance_docs]
+        )
+        retrieved_domain_sections = [
+            f"{domain}:{resolver.resolve(doc) or '(未识别分区)'}"
+            for domain, doc in domain_docs
         ]
-        retrieved_policy_section_set = {
-            section for section in retrieved_policy_sections if section != "(未识别分区)"
+        retrieved_domain_section_set = {
+            section for section in retrieved_domain_sections if not section.endswith(":(未识别分区)")
         }
-        matched_policy_sections = sorted(
-            expected_policy_sections & retrieved_policy_section_set
+        matched_domain_sections = sorted(
+            expected_domain_sections & retrieved_domain_section_set
         )
 
         question_relevant_retrieved = sum(
             1 for ref in retrieved_question_refs if ref in expected_question_refs
         )
-        policy_relevant_retrieved = sum(
-            1 for section in retrieved_policy_sections if section in expected_policy_sections
+        domain_relevant_retrieved = sum(
+            1 for section in retrieved_domain_sections if section in expected_domain_sections
         )
 
         question_hit = bool(matched_question_refs)
-        policy_hit = bool(matched_policy_sections)
+        domain_hit = bool(matched_domain_sections)
         question_complete = matched_question_refs == sorted(expected_question_refs)
-        policy_complete = matched_policy_sections == sorted(expected_policy_sections)
+        domain_complete = matched_domain_sections == sorted(expected_domain_sections)
 
         question_stats.expected_total += len(expected_question_refs)
         question_stats.retrieved_total += len(retrieved_question_refs)
@@ -307,15 +369,15 @@ def evaluate():
         question_stats.complete_queries += int(question_complete)
         question_stats.total_queries += 1
 
-        policy_stats.expected_total += len(expected_policy_sections)
-        policy_stats.retrieved_total += len(retrieved_policy_sections)
-        policy_stats.relevant_hit_total += len(matched_policy_sections)
-        policy_stats.relevant_retrieved_total += policy_relevant_retrieved
-        policy_stats.hit_queries += int(policy_hit)
-        policy_stats.complete_queries += int(policy_complete)
-        policy_stats.total_queries += 1
+        domain_stats.expected_total += len(expected_domain_sections)
+        domain_stats.retrieved_total += len(retrieved_domain_sections)
+        domain_stats.relevant_hit_total += len(matched_domain_sections)
+        domain_stats.relevant_retrieved_total += domain_relevant_retrieved
+        domain_stats.hit_queries += int(domain_hit)
+        domain_stats.complete_queries += int(domain_complete)
+        domain_stats.total_queries += 1
 
-        joint_hit_queries += int(question_hit and policy_hit)
+        joint_hit_queries += int(question_hit and domain_hit)
 
         question_recall = (
             len(matched_question_refs) / len(expected_question_refs)
@@ -327,57 +389,61 @@ def evaluate():
             if retrieved_question_refs
             else 0.0
         )
-        policy_recall = (
-            len(matched_policy_sections) / len(expected_policy_sections)
-            if expected_policy_sections
+        domain_recall = (
+            len(matched_domain_sections) / len(expected_domain_sections)
+            if expected_domain_sections
             else 0.0
         )
-        policy_precision = (
-            policy_relevant_retrieved / len(retrieved_policy_sections)
-            if retrieved_policy_sections
+        domain_precision = (
+            domain_relevant_retrieved / len(retrieved_domain_sections)
+            if retrieved_domain_sections
             else 0.0
         )
 
         print("\n" + "-" * 70)
         print(f"[{index}] {case_name}")
         print(f"Query: {query}")
+        print(f"  路由期望: {expected_route}")
+        print(f"  路由实际: {actual_route} | 命中={route_correct}")
         print(f"  问题库期望: {sorted(expected_question_refs)}")
         print(f"  问题库召回: {retrieved_question_refs}")
-        question_k = retrieval_service.question_retriever.search_kwargs.get('k', 'N/A')
         print(
             f"  问题库命中: {matched_question_refs} | "
             f"Recall@{question_k}={question_recall:.1%}, "
             f"Precision@{question_k}={question_precision:.1%}"
         )
-        print(f"  政策库期望: {sorted(expected_policy_sections)}")
-        print(f"  政策库召回: {retrieved_policy_sections}")
-        policy_k = retrieval_service.policy_retriever.search_kwargs.get('k', 'N/A')
+        print(f"  知识域期望: {sorted(expected_domain_sections)}")
+        print(f"  知识域召回: {retrieved_domain_sections}")
         print(
-            f"  政策库命中: {matched_policy_sections} | "
-            f"Recall@{policy_k}={policy_recall:.1%}, "
-            f"Precision@{policy_k}={policy_precision:.1%}"
+            f"  知识域命中: {matched_domain_sections} | "
+            f"Recall@{domain_k}={domain_recall:.1%}, "
+            f"Precision@{domain_k}={domain_precision:.1%}"
         )
 
         details.append(
             {
                 "name": case_name,
                 "query": query,
+                "expected_route": expected_route,
+                "actual_route": actual_route,
+                "route_correct": route_correct,
                 "expected_question_refs": sorted(expected_question_refs),
                 "retrieved_question_refs": retrieved_question_refs,
                 "matched_question_refs": matched_question_refs,
                 "question_recall_at_k": question_recall,
                 "question_precision_at_k": question_precision,
-                "expected_policy_sections": sorted(expected_policy_sections),
-                "retrieved_policy_sections": retrieved_policy_sections,
-                "matched_policy_sections": matched_policy_sections,
-                "policy_recall_at_k": policy_recall,
-                "policy_precision_at_k": policy_precision,
-                "joint_hit": question_hit and policy_hit,
+                "expected_domain_sections": sorted(expected_domain_sections),
+                "retrieved_domain_sections": retrieved_domain_sections,
+                "matched_domain_sections": matched_domain_sections,
+                "domain_recall_at_k": domain_recall,
+                "domain_precision_at_k": domain_precision,
+                "joint_hit": question_hit and domain_hit,
             }
         )
 
-    _print_stage_summary(question_stats, retrieval_service.question_retriever.search_kwargs.get('k', 0))
-    _print_stage_summary(policy_stats, retrieval_service.policy_retriever.search_kwargs.get('k', 0))
+    _print_stage_summary(question_stats, question_k)
+    _print_stage_summary(domain_stats, domain_k)
+    _print_route_summary(route_stats)
 
     joint_hit_at_k = joint_hit_queries / len(test_queries) if test_queries else 0.0
     print("\n" + "=" * 70)
@@ -400,16 +466,21 @@ def evaluate():
             "relevant_hit_total": question_stats.relevant_hit_total,
             "relevant_retrieved_total": question_stats.relevant_retrieved_total,
         },
-        "policy_stage": {
-            "recall_at_k": policy_stats.recall_at_k,
-            "precision_at_k": policy_stats.precision_at_k,
-            "hit_at_k": policy_stats.hit_at_k,
-            "complete_at_k": policy_stats.complete_at_k,
-            "f1_at_k": policy_stats.f1_at_k,
-            "expected_total": policy_stats.expected_total,
-            "retrieved_total": policy_stats.retrieved_total,
-            "relevant_hit_total": policy_stats.relevant_hit_total,
-            "relevant_retrieved_total": policy_stats.relevant_retrieved_total,
+        "domain_stage": {
+            "recall_at_k": domain_stats.recall_at_k,
+            "precision_at_k": domain_stats.precision_at_k,
+            "hit_at_k": domain_stats.hit_at_k,
+            "complete_at_k": domain_stats.complete_at_k,
+            "f1_at_k": domain_stats.f1_at_k,
+            "expected_total": domain_stats.expected_total,
+            "retrieved_total": domain_stats.retrieved_total,
+            "relevant_hit_total": domain_stats.relevant_hit_total,
+            "relevant_retrieved_total": domain_stats.relevant_retrieved_total,
+        },
+        "route_stage": {
+            "accuracy": route_stats.accuracy,
+            "correct_queries": route_stats.correct_queries,
+            "total_queries": route_stats.total_queries,
         },
         "joint_hit_at_k": joint_hit_at_k,
         "details": details,

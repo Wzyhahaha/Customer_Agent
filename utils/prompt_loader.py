@@ -5,6 +5,7 @@ from utils.path_tool import get_abs_path
 from utils.logger_handler import logger
 
 def load_system_prompts():
+    # Prompt 路径统一走配置文件，避免在代码中散落硬编码路径。
     try:
         system_prompt_path = get_abs_path(prompt_conf["main_prompt_path"])
     except KeyError:

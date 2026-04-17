@@ -38,6 +38,7 @@ def listdir_with_allowed_type(path, allowed_types):
         logger.error(f"[listdir_with_allowed_type]{path} 不是文件夹")
         return tuple()
 
+    # 把配置里的扩展名统一规范成 .txt / .pdf / .jsonl 这种格式。
     normalized_types = tuple(f".{item.lstrip('.')}" for item in allowed_types)
     for filename in os.listdir(path):
         if filename.endswith(normalized_types):
@@ -73,6 +74,7 @@ def jsonl_loader(filepath):
                     logger.warning(f"[jsonl_loader]{filepath}:{line_no} 不是对象结构，已跳过")
                     continue
 
+                # 除正文外的字段都放进 metadata，方便后续检索和格式化上下文。
                 metadata = {
                     key: value
                     for key, value in record.items()

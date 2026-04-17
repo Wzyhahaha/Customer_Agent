@@ -1,6 +1,7 @@
 from contextvars import ContextVar
 
 
+# 用 ContextVar 保存“当前请求”的用户上下文，避免工具函数层层传参。
 _user_city_var: ContextVar[str] = ContextVar("user_city", default="")
 _user_weather_var: ContextVar[str] = ContextVar("user_weather", default="")
 _user_temperature_var: ContextVar[str] = ContextVar("user_temperature", default="")

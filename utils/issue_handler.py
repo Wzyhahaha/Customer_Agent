@@ -46,6 +46,7 @@ def _save_all_issue_states(states: dict[str, dict[str, Any]]) -> None:
 
 
 def _ensure_user_bucket(states: dict[str, dict[str, Any]], user_id: str) -> dict[str, Any]:
+    # 每个用户有自己的问题池，active_issue_id 指向当前还在处理的问题。
     bucket = states.setdefault(user_id, {"active_issue_id": "", "issues": []})
     bucket.setdefault("active_issue_id", "")
     bucket.setdefault("issues", [])
@@ -81,6 +82,7 @@ def start_or_continue_issue(user_id: str, user_message: str) -> dict[str, Any]:
     active_issue = _find_issue(bucket, bucket.get("active_issue_id", ""))
 
     if not active_issue or active_issue.get("status") != PROCESSING:
+        # 没有进行中的问题时，新建一个问题单开始追踪。
         active_issue = {
             "issue_id": uuid4().hex,
             "status": PROCESSING,
@@ -108,6 +110,7 @@ def start_or_continue_issue(user_id: str, user_message: str) -> dict[str, Any]:
 
 
 def should_request_cause(issue: dict[str, Any] | None) -> bool:
+    # 首轮先补采问题原因，避免在信息不足时直接给出排障建议。
     if not issue or issue.get("status") != PROCESSING:
         return False
     return not bool(issue.get("cause_inquiry_sent"))
@@ -147,6 +150,7 @@ def record_assistant_solution(user_id: str, assistant_message: str) -> dict[str,
 
 
 def should_escalate_to_human(issue: dict[str, Any] | None) -> bool:
+    # 当前策略很直观：连续给出 3 次方案仍未解决，就建议升级人工。
     if not issue or issue.get("status") != PROCESSING:
         return False
     return int(issue.get("troubleshooting_attempts", 0)) >= 3
@@ -160,6 +164,7 @@ def _truncate_text(text: str, max_len: int = 48) -> str:
 
 
 def build_issue_summary(issue: dict[str, Any]) -> str:
+    # 升级人工时只摘要“首问 + 最新补充”，让售后能快速接手。
     user_messages = issue.get("user_messages", [])
     first_question = user_messages[0].get("content", "") if user_messages else ""
     latest_feedback = user_messages[-1].get("content", "") if user_messages else ""

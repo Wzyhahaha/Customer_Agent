@@ -22,6 +22,30 @@ class TestVectorStoreService(unittest.TestCase):
         self.assertGreaterEqual(len(prepared), 1)
         self.assertNotEqual(prepared, [])
 
+    def test_policy_rules_store_only_keeps_policy_file(self):
+        service = VectorStoreService("policy_rules")
+
+        filtered = service._filter_files_for_store(
+            [
+                "data/structured_policies/policy_rules.jsonl",
+                "data/structured_policies/troubleshooting_cases.jsonl",
+            ]
+        )
+
+        self.assertEqual(filtered, ["data/structured_policies/policy_rules.jsonl"])
+
+    def test_troubleshooting_store_only_keeps_troubleshooting_file(self):
+        service = VectorStoreService("troubleshooting_cases")
+
+        filtered = service._filter_files_for_store(
+            [
+                "data/structured_policies/policy_rules.jsonl",
+                "data/structured_policies/troubleshooting_cases.jsonl",
+            ]
+        )
+
+        self.assertEqual(filtered, ["data/structured_policies/troubleshooting_cases.jsonl"])
+
 
 if __name__ == "__main__":
     unittest.main()

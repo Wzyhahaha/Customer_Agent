@@ -51,12 +51,25 @@ class VectorStoreService:
     def _prepare_documents_for_store(self, documents: list[Document]) -> list[Document]:
         """根据 store 类型决定是否切分文档。
 
-        policy_rules 和 troubleshooting_cases 使用结构化知识，直接入库不切分。
+        policy_rules、troubleshooting_cases 和 maintenance_guides 使用结构化知识，直接入库不切分。
         其他 store 类型使用传统的分片逻辑。
         """
-        if self.store_mode in {"policy_rules", "troubleshooting_cases"}:
+        if self.store_mode in {"policy_rules", "troubleshooting_cases", "maintenance_guides"}:
             return documents
         return self.spliter.split_documents(documents)
+
+    def _filter_files_for_store(self, file_paths: list[str]) -> list[str]:
+        target_basename = {
+            "policy_rules": "policy_rules.jsonl",
+            "troubleshooting_cases": "troubleshooting_cases.jsonl",
+            "maintenance_guides": "maintenance_guides.jsonl",
+        }.get(self.store_mode)
+        if not target_basename:
+            return list(file_paths)
+        return [
+            path for path in file_paths
+            if os.path.basename(path) == target_basename
+        ]
 
     @classmethod
     def ensure_all_vector_stores_synced(cls):
@@ -98,12 +111,12 @@ class VectorStoreService:
             conn.close()
 
     def _list_allowed_files(self) -> list[str]:
-        return list(
+        return self._filter_files_for_store(list(
             listdir_with_allowed_type(
                 self.data_path,
                 self.allowed_types,
             )
-        )
+        ))
 
     def _rebuild_md5_store_from_files(self, allowed_files_path: list[str] | None = None):
         md5_values = []

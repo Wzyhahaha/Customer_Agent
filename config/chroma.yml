@@ -37,6 +37,15 @@ stores:
     k: 4
     mode: troubleshooting_cases
 
+  maintenance_guides:
+    collection_name: maintenance_guides
+    persist_directory: chroma_db/maintenance_guides
+    data_path: data/structured_policies
+    md5_hex_store: md5_maintenance_guides.text
+    allow_knowledge_file_type: ["jsonl"]
+    k: 4
+    mode: maintenance_guides
+
 chunk_size: 200
 chunk_overlap: 20
 separators: ["\n\n", "\n", "。", "；", "，", ".", "!", "?"]

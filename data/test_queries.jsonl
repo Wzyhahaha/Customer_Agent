@@ -1,16 +1,6 @@
-{"name": "首次使用准备", "query": "首次使用扫地机器人需要做什么？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 1}], "expected_policy_sections": ["通用基础维护"]}
-{"name": "清扫后仍有灰尘", "query": "清扫后地面还有灰尘、碎屑怎么办？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 11}], "expected_policy_sections": ["扫地功能专属维护", "耗材专项维护与更换"]}
-{"name": "边角清扫不干净", "query": "边角位置清扫不干净怎么办？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 13}], "expected_policy_sections": ["扫地功能专属维护"]}
-{"name": "拖地后有水渍", "query": "拖地后地面有水渍、水痕怎么办？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 15}, {"source": "机器人FAQ知识库_合并版.jsonl", "id": 69}], "expected_policy_sections": ["扫拖一体拖地功能专属维护", "环境适配维护"]}
-{"name": "拖地后仍有污渍", "query": "拖地后地面还有污渍怎么解决？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 16}], "expected_policy_sections": ["扫拖一体拖地功能专属维护"]}
-{"name": "主刷更换周期", "query": "主刷需要多久更换一次？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 21}], "expected_policy_sections": ["耗材专项维护与更换"]}
-{"name": "边刷磨损与更换", "query": "边刷磨损后有什么影响？如何更换？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 22}], "expected_policy_sections": ["扫地功能专属维护", "耗材专项维护与更换"]}
-{"name": "HEPA 滤网清洗", "query": "HEPA滤网可以清洗重复使用吗？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 23}], "expected_policy_sections": ["耗材专项维护与更换"]}
-{"name": "尘盒清理频率", "query": "尘盒多久清理一次？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 24}], "expected_policy_sections": ["扫地功能专属维护"]}
-{"name": "拖布清洗与更换", "query": "拖布如何清洗和更换？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 25}], "expected_policy_sections": ["扫拖一体拖地功能专属维护", "耗材专项维护与更换"]}
-{"name": "滤网堵塞排查", "query": "滤网堵塞会有什么症状？如何清理？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 28}], "expected_policy_sections": ["扫地功能专属维护", "耗材专项维护与更换"]}
-{"name": "木地板拖地注意事项", "query": "木地板上拖地需要注意什么？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 68}], "expected_policy_sections": ["环境适配维护", "扫拖一体拖地功能专属维护"]}
-{"name": "清洁液使用限制", "query": "清洁液可以随意添加吗？", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 32}], "expected_policy_sections": ["扫拖一体拖地功能专属维护", "故障预防维护"]}
-{"name": "是否在保", "query": "这个机器还在保修期吗", "expected_question_refs": [{"source": "扫地机器人售后高频政策问法清单.jsonl", "id": 1}], "expected_policy_sections": ["保修判断"]}
-{"name": "WiFi 故障排查", "query": "机器人连不上 WiFi 怎么办", "expected_question_refs": [{"source": "机器人FAQ知识库_合并版.jsonl", "id": 4}], "expected_policy_sections": ["故障排查"]}
-{"name": "不出水且问保修", "query": "机器不出水，如果是正常使用坏的还能保修吗", "expected_question_refs": [{"source": "扫地机器人售后高频政策问法清单.jsonl", "id": 12}], "expected_policy_sections": ["免费维修判断", "故障排查"]}
+{"name":"是否在保","query":"这个机器还在保修期吗","expected_route":"policy","expected_question_refs":[{"source":"扫地机器人售后高频政策问法清单.jsonl","id":1}],"expected_domain_sections":["policy:保修判断"]}
+{"name":"WiFi 配网失败","query":"APP搜不到设备，配网失败怎么办","expected_route":"troubleshooting","expected_question_refs":[{"source":"机器人FAQ知识库_合并版.jsonl","id":4}],"expected_domain_sections":["troubleshooting:故障排查"]}
+{"name":"拖布清洗","query":"拖布怎么清洗，多久换一次","expected_route":"maintenance","expected_question_refs":[{"source":"扫地机器人售后高频政策问法清单.jsonl","id":31}],"expected_domain_sections":["maintenance:耗材专项维护与更换"]}
+{"name":"木地板拖地注意事项","query":"木地板上拖地需要注意什么","expected_route":"maintenance","expected_question_refs":[{"source":"机器人FAQ知识库_合并版.jsonl","id":68}],"expected_domain_sections":["maintenance:环境适配维护"]}
+{"name":"滤网堵塞且问保修","query":"滤网堵了怎么清理，坏了算保修吗","expected_route":"mixed","expected_question_refs":[{"source":"扫地机器人售后高频政策问法清单.jsonl","id":32}],"expected_domain_sections":["maintenance:耗材专项维护与更换","policy:免费维修判断"]}
+{"name":"拖布清洗后仍不出水","query":"拖布怎么清洗，如果还是不出水要不要送修","expected_route":"mixed","expected_question_refs":[{"source":"扫地机器人售后高频政策问法清单.jsonl","id":52}],"expected_domain_sections":["maintenance:扫拖一体拖地功能专属维护","troubleshooting:故障排查"]}

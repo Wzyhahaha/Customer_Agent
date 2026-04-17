@@ -15,6 +15,7 @@ from agent.tools.middleware import monitor_tool, log_before_model, report_prompt
 
 class ReactAgent:
     def __init__(self):
+        # create_agent 会把模型、工具和中间件组合成一个可执行的 ReAct Agent。
         self.agent = create_agent(
             model=chat_model,
             # state_schema=load_system_prompts(),
@@ -30,6 +31,7 @@ class ReactAgent:
 
     @staticmethod
     def _stringify_message_content(content) -> str:
+        # LangChain 的消息内容可能是字符串，也可能是结构化片段列表。
         if isinstance(content, str):
             return content
 
@@ -48,6 +50,7 @@ class ReactAgent:
         return str(content or "")
 
     def execute_stream(self, messages):
+        # 对外暴露流式接口，供 Streamlit 页面逐步消费输出。
         if isinstance(messages, str):
             input_messages = [{"role": "user", "content": messages}]
         else:
@@ -72,6 +75,7 @@ class ReactAgent:
                 continue
 
             if current_content.startswith(previous_content):
+                # stream_mode="values" 下拿到的是“当前完整内容”，需要手动裁出增量。
                 delta = current_content[len(previous_content):]
             else:
                 delta = current_content
