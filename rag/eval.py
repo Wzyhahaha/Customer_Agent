@@ -14,11 +14,14 @@ RAG 检索评估模块。
 
 from __future__ import annotations
 
+import argparse
 import json
+import math
 import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
@@ -189,6 +192,8 @@ class StageStats:
     hit_queries: int = 0
     complete_queries: int = 0
     total_queries: int = 0
+    reciprocal_rank_total: float = 0.0
+    ndcg_total: float = 0.0
 
     @property
     def recall_at_k(self) -> float:
@@ -220,6 +225,14 @@ class StageStats:
             else 0.0
         )
 
+    @property
+    def mrr_at_k(self) -> float:
+        return self.reciprocal_rank_total / self.total_queries if self.total_queries else 0.0
+
+    @property
+    def ndcg_at_k(self) -> float:
+        return self.ndcg_total / self.total_queries if self.total_queries else 0.0
+
 
 @dataclass
 class RouteStats:
@@ -233,6 +246,45 @@ class RouteStats:
 
 def _format_ratio(numerator: int, denominator: int) -> str:
     return f"{numerator}/{denominator}" if denominator else "0/0"
+
+
+def reciprocal_rank(retrieved: list[str], expected: set[str]) -> float:
+    for index, item in enumerate(retrieved, start=1):
+        if item in expected:
+            return 1.0 / index
+    return 0.0
+
+
+def ndcg_at_k(retrieved: list[str], expected: set[str], k: int) -> float:
+    if not expected or k <= 0:
+        return 0.0
+
+    dcg = 0.0
+    for index, item in enumerate(retrieved[:k], start=1):
+        if item in expected:
+            dcg += 1.0 / math.log2(index + 1)
+
+    ideal_hits = min(len(expected), k)
+    ideal_dcg = sum(1.0 / math.log2(index + 1) for index in range(1, ideal_hits + 1))
+    return dcg / ideal_dcg if ideal_dcg else 0.0
+
+
+def classify_bad_case(
+    route_correct: bool,
+    expected: set[str],
+    retrieved: list[str],
+    matched: list[str],
+    top_k: int | None = None,
+) -> str:
+    if not route_correct:
+        return "route_error"
+    if expected and not matched:
+        return "recall_miss"
+    if top_k is not None and expected and not any(item in expected for item in retrieved[:top_k]):
+        return "rank_error"
+    if matched and len(retrieved) >= 4 and len(matched) / len(retrieved) <= 0.25:
+        return "context_noise"
+    return "ok"
 
 
 def _print_stage_summary(stats: StageStats, top_k: int):
@@ -256,6 +308,8 @@ def _print_stage_summary(stats: StageStats, top_k: int):
         f" = {stats.complete_at_k:.1%}"
     )
     print(f"F1@{top_k}:        {stats.f1_at_k:.1%}")
+    print(f"MRR@{top_k}:       {stats.mrr_at_k:.1%}")
+    print(f"nDCG@{top_k}:      {stats.ndcg_at_k:.1%}")
 
 
 def _print_route_summary(stats: RouteStats):
@@ -278,9 +332,64 @@ def _get_retriever_k(service: Any, *attr_names: str) -> int:
     return max(values) if values else 0
 
 
-def evaluate():
+def _extract_question_ref_from_evidence(evidence: Any) -> str:
+    metadata = evidence.metadata or {}
+    source = metadata.get("source")
+    doc_id = metadata.get("id") or evidence.doc_id
+    if source is None or doc_id is None:
+        return ""
+    source_name = Path(str(source)).name
+    return f"{source_name}#{doc_id}"
+
+
+def _resolve_evidence_section(resolver: PolicySectionResolver, evidence: Any) -> str:
+    metadata = evidence.metadata or {}
+    for key in ("category", "scene", "section", "topic"):
+        value = str(metadata.get(key) or "").strip()
+        if value:
+            return value
+
+    doc_like = SimpleNamespace(
+        page_content=evidence.content,
+        metadata=metadata,
+    )
+    return resolver.resolve(doc_like)
+
+
+def _retrieve_for_eval(retrieval_service: Any, query: str, pipeline: str):
+    if pipeline == "enhanced":
+        result = retrieval_service.retrieve(query)
+        route = "mixed" if len(result.trace.query_analysis.domains) > 1 else (
+            result.trace.query_analysis.domains[0]
+            if result.trace.query_analysis.domains
+            else "other"
+        )
+        question_docs = []
+        domain_docs = []
+        for item in result.evidence:
+            if item.domain == "question":
+                question_docs.append(item)
+            else:
+                domain_docs.append((item.domain, item))
+        return route, question_docs, domain_docs
+
+    bundle = retrieval_service.retrieve(query)
+    domain_docs = (
+        [("policy", doc) for doc in bundle.policy_docs]
+        + [("troubleshooting", doc) for doc in bundle.troubleshooting_docs]
+        + [("maintenance", doc) for doc in bundle.maintenance_docs]
+    )
+    return bundle.route.route, bundle.question_docs, domain_docs
+
+
+def evaluate(pipeline: str = "baseline"):
     """评估两阶段检索效果。"""
-    retrieval_service = TypedRetrievalService()
+    if pipeline == "enhanced":
+        from rag.enhanced_retrieval_service import EnhancedRetrievalService
+
+        retrieval_service = EnhancedRetrievalService()
+    else:
+        retrieval_service = TypedRetrievalService()
     resolver = PolicySectionResolver()
     test_queries = load_test_queries()
 
@@ -298,7 +407,7 @@ def evaluate():
     )
 
     print("=" * 70)
-    print("RAG 两阶段检索评估")
+    print(f"RAG 两阶段检索评估 ({pipeline})")
     print("=" * 70)
     print(f"测试集文件: {TEST_FILE}")
     print(f"样本数: {len(test_queries)}")
@@ -319,29 +428,36 @@ def evaluate():
             if str(section).strip()
         }
 
-        # 使用 TypedRetrievalService 进行检索
-        bundle = retrieval_service.retrieve(query)
-        actual_route = bundle.route.route
+        actual_route, question_docs, domain_docs = _retrieve_for_eval(
+            retrieval_service,
+            query,
+            pipeline,
+        )
         route_correct = actual_route == expected_route
         route_stats.correct_queries += int(route_correct)
         route_stats.total_queries += 1
 
-        question_docs = bundle.question_docs
-        retrieved_question_refs = [
-            ref for ref in (extract_question_ref(doc) for doc in question_docs) if ref
-        ]
+        if pipeline == "enhanced":
+            retrieved_question_refs = [
+                ref for ref in (_extract_question_ref_from_evidence(doc) for doc in question_docs) if ref
+            ]
+        else:
+            retrieved_question_refs = [
+                ref for ref in (extract_question_ref(doc) for doc in question_docs) if ref
+            ]
         retrieved_question_ref_set = set(retrieved_question_refs)
         matched_question_refs = sorted(expected_question_refs & retrieved_question_ref_set)
 
-        domain_docs = (
-            [("policy", doc) for doc in bundle.policy_docs]
-            + [("troubleshooting", doc) for doc in bundle.troubleshooting_docs]
-            + [("maintenance", doc) for doc in bundle.maintenance_docs]
-        )
-        retrieved_domain_sections = [
-            f"{domain}:{resolver.resolve(doc) or '(未识别分区)'}"
-            for domain, doc in domain_docs
-        ]
+        if pipeline == "enhanced":
+            retrieved_domain_sections = [
+                f"{domain}:{_resolve_evidence_section(resolver, doc) or '(未识别分区)'}"
+                for domain, doc in domain_docs
+            ]
+        else:
+            retrieved_domain_sections = [
+                f"{domain}:{resolver.resolve(doc) or '(未识别分区)'}"
+                for domain, doc in domain_docs
+            ]
         retrieved_domain_section_set = {
             section for section in retrieved_domain_sections if not section.endswith(":(未识别分区)")
         }
@@ -368,6 +484,15 @@ def evaluate():
         question_stats.hit_queries += int(question_hit)
         question_stats.complete_queries += int(question_complete)
         question_stats.total_queries += 1
+        question_stats.reciprocal_rank_total += reciprocal_rank(
+            retrieved_question_refs,
+            expected_question_refs,
+        )
+        question_stats.ndcg_total += ndcg_at_k(
+            retrieved_question_refs,
+            expected_question_refs,
+            question_k or len(retrieved_question_refs),
+        )
 
         domain_stats.expected_total += len(expected_domain_sections)
         domain_stats.retrieved_total += len(retrieved_domain_sections)
@@ -376,6 +501,15 @@ def evaluate():
         domain_stats.hit_queries += int(domain_hit)
         domain_stats.complete_queries += int(domain_complete)
         domain_stats.total_queries += 1
+        domain_stats.reciprocal_rank_total += reciprocal_rank(
+            retrieved_domain_sections,
+            expected_domain_sections,
+        )
+        domain_stats.ndcg_total += ndcg_at_k(
+            retrieved_domain_sections,
+            expected_domain_sections,
+            domain_k or len(retrieved_domain_sections),
+        )
 
         joint_hit_queries += int(question_hit and domain_hit)
 
@@ -438,6 +572,20 @@ def evaluate():
                 "domain_recall_at_k": domain_recall,
                 "domain_precision_at_k": domain_precision,
                 "joint_hit": question_hit and domain_hit,
+                "question_bad_case": classify_bad_case(
+                    route_correct,
+                    expected_question_refs,
+                    retrieved_question_refs,
+                    matched_question_refs,
+                    question_k or len(retrieved_question_refs),
+                ),
+                "domain_bad_case": classify_bad_case(
+                    route_correct,
+                    expected_domain_sections,
+                    retrieved_domain_sections,
+                    matched_domain_sections,
+                    domain_k or len(retrieved_domain_sections),
+                ),
             }
         )
 
@@ -461,6 +609,8 @@ def evaluate():
             "hit_at_k": question_stats.hit_at_k,
             "complete_at_k": question_stats.complete_at_k,
             "f1_at_k": question_stats.f1_at_k,
+            "mrr_at_k": question_stats.mrr_at_k,
+            "ndcg_at_k": question_stats.ndcg_at_k,
             "expected_total": question_stats.expected_total,
             "retrieved_total": question_stats.retrieved_total,
             "relevant_hit_total": question_stats.relevant_hit_total,
@@ -472,6 +622,8 @@ def evaluate():
             "hit_at_k": domain_stats.hit_at_k,
             "complete_at_k": domain_stats.complete_at_k,
             "f1_at_k": domain_stats.f1_at_k,
+            "mrr_at_k": domain_stats.mrr_at_k,
+            "ndcg_at_k": domain_stats.ndcg_at_k,
             "expected_total": domain_stats.expected_total,
             "retrieved_total": domain_stats.retrieved_total,
             "relevant_hit_total": domain_stats.relevant_hit_total,
@@ -488,4 +640,7 @@ def evaluate():
 
 
 if __name__ == "__main__":
-    evaluate()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pipeline", choices=["baseline", "enhanced"], default="baseline")
+    args = parser.parse_args()
+    evaluate(pipeline=args.pipeline)

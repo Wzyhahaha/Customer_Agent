@@ -31,9 +31,9 @@ class RagSummarizeService:
 
     def _init_chain(self):
         if self.model is None:
-            from model.factory import chat_model
+            from model.factory import get_chat_model
 
-            self.model = chat_model
+            self.model = get_chat_model()
         return self.prompt_template | print_prompt | self.model | StrOutputParser()
 
     def build_chain_inputs(self, query: str) -> dict[str, str]:
