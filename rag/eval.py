@@ -260,9 +260,11 @@ def ndcg_at_k(retrieved: list[str], expected: set[str], k: int) -> float:
         return 0.0
 
     dcg = 0.0
+    seen_relevant: set[str] = set()
     for index, item in enumerate(retrieved[:k], start=1):
-        if item in expected:
+        if item in expected and item not in seen_relevant:
             dcg += 1.0 / math.log2(index + 1)
+            seen_relevant.add(item)
 
     ideal_hits = min(len(expected), k)
     ideal_dcg = sum(1.0 / math.log2(index + 1) for index in range(1, ideal_hits + 1))
@@ -287,29 +289,34 @@ def classify_bad_case(
     return "ok"
 
 
+def _format_k(top_k: int) -> str:
+    return str(top_k) if top_k else "N/A"
+
+
 def _print_stage_summary(stats: StageStats, top_k: int):
+    k_label = _format_k(top_k)
     print("\n" + "=" * 70)
-    print(f"{stats.name} 评估结果 (K={top_k})")
+    print(f"{stats.name} 评估结果 (K={k_label})")
     print("=" * 70)
     print(
-        f"Recall@{top_k}:    {_format_ratio(stats.relevant_hit_total, stats.expected_total)}"
+        f"Recall@{k_label}:    {_format_ratio(stats.relevant_hit_total, stats.expected_total)}"
         f" = {stats.recall_at_k:.1%}"
     )
     print(
-        f"Precision@{top_k}: {_format_ratio(stats.relevant_retrieved_total, stats.retrieved_total)}"
+        f"Precision@{k_label}: {_format_ratio(stats.relevant_retrieved_total, stats.retrieved_total)}"
         f" = {stats.precision_at_k:.1%}"
     )
     print(
-        f"Hit@{top_k}:       {_format_ratio(stats.hit_queries, stats.total_queries)}"
+        f"Hit@{k_label}:       {_format_ratio(stats.hit_queries, stats.total_queries)}"
         f" = {stats.hit_at_k:.1%}"
     )
     print(
-        f"Complete@{top_k}:  {_format_ratio(stats.complete_queries, stats.total_queries)}"
+        f"Complete@{k_label}:  {_format_ratio(stats.complete_queries, stats.total_queries)}"
         f" = {stats.complete_at_k:.1%}"
     )
-    print(f"F1@{top_k}:        {stats.f1_at_k:.1%}")
-    print(f"MRR@{top_k}:       {stats.mrr_at_k:.1%}")
-    print(f"nDCG@{top_k}:      {stats.ndcg_at_k:.1%}")
+    print(f"F1@{k_label}:        {stats.f1_at_k:.1%}")
+    print(f"MRR@{k_label}:       {stats.mrr_at_k:.1%}")
+    print(f"nDCG@{k_label}:      {stats.ndcg_at_k:.1%}")
 
 
 def _print_route_summary(stats: RouteStats):
@@ -543,15 +550,15 @@ def evaluate(pipeline: str = "baseline"):
         print(f"  问题库召回: {retrieved_question_refs}")
         print(
             f"  问题库命中: {matched_question_refs} | "
-            f"Recall@{question_k}={question_recall:.1%}, "
-            f"Precision@{question_k}={question_precision:.1%}"
+            f"Recall@{_format_k(question_k)}={question_recall:.1%}, "
+            f"Precision@{_format_k(question_k)}={question_precision:.1%}"
         )
         print(f"  知识域期望: {sorted(expected_domain_sections)}")
         print(f"  知识域召回: {retrieved_domain_sections}")
         print(
             f"  知识域命中: {matched_domain_sections} | "
-            f"Recall@{domain_k}={domain_recall:.1%}, "
-            f"Precision@{domain_k}={domain_precision:.1%}"
+            f"Recall@{_format_k(domain_k)}={domain_recall:.1%}, "
+            f"Precision@{_format_k(domain_k)}={domain_precision:.1%}"
         )
 
         details.append(

@@ -186,6 +186,12 @@ def test_ndcg_at_k_scores_relevant_items_higher_when_early():
     assert 0 < late < early
 
 
+def test_ndcg_at_k_does_not_reward_duplicate_relevant_items_above_one():
+    score = eval_module.ndcg_at_k(["good", "good", "bad"], {"good"}, 3)
+
+    assert score == 1.0
+
+
 def test_classify_bad_case_route_recall_rank_and_context():
     assert (
         eval_module.classify_bad_case(

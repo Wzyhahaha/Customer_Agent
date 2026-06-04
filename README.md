@@ -165,6 +165,15 @@ streamlit run app.py
 python rag/eval.py
 ```
 
+也可以显式对比两条 RAG 管线：
+
+```powershell
+python rag/eval.py --pipeline baseline
+python rag/eval.py --pipeline enhanced
+```
+
+`baseline` 使用原有分类型检索流程。`enhanced` 会启用查询分析、确定性查询改写、多源证据检索、RRF 融合、规则重排、证据引用和检索 Trace。两种模式都会输出 `Recall@K`、`Precision@K`、`MRR@K`、`nDCG@K`、路由准确率、`Joint Hit@K` 和坏例分类，便于横向比较检索质量。
+
 这个脚本会读取 `data/test_queries.jsonl`，并输出：
 
 - 问题库的 `Recall@K`、`Precision@K`、`Hit@K`、`Complete@K`、`F1@K`
