@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from langchain.agents import create_agent
-from model.factory import chat_model
+from model.factory import get_chat_model
 from agent.tools.agent_tools import (
     rag_summarize,
     get_weather,
@@ -17,7 +17,7 @@ class ReactAgent:
     def __init__(self):
         # create_agent 会把模型、工具和中间件组合成一个可执行的 ReAct Agent。
         self.agent = create_agent(
-            model=chat_model,
+            model=get_chat_model(),
             # state_schema=load_system_prompts(),
             tools=[rag_summarize,
                    get_weather,

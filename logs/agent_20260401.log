@@ -1,5 +1,0 @@
-2026-04-01 23:30:55,967 - agent - INFO - vector_store.py:204 - [向量库同步][question_recall] 检测到已有向量库，开始检查新增文件
-2026-04-01 23:30:55,969 - agent - INFO - vector_store.py:229 - [加载知识库][question_recall] C:\Users\25086\Desktop\Agent项目_学习班\data/questions\扫地机器人售后高频政策问法清单.jsonl 已入库，跳过
-2026-04-01 23:30:55,972 - agent - INFO - vector_store.py:229 - [加载知识库][question_recall] C:\Users\25086\Desktop\Agent项目_学习班\data/questions\机器人FAQ知识库_合并版.jsonl 已入库，跳过
-2026-04-01 23:30:56,116 - agent - INFO - vector_store.py:178 - [向量库同步][policy_answer] 检测到向量库不存在，开始构建知识库
-2026-04-01 23:31:00,511 - agent - INFO - vector_store.py:246 - [加载知识库][policy_answer] C:\Users\25086\Desktop\Agent项目_学习班\data/policies\维护保养.txt 加载成功

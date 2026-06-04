@@ -10,7 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from model.factory import embed_model
+from model.factory import get_embed_model
 from utils.config_handler import chroma_conf
 from utils.file_handler import (
     get_file_md5_hex,
@@ -84,7 +84,7 @@ class VectorStoreService:
     def _create_vector_store(self):
         return Chroma(
             collection_name=self.collection_name,
-            embedding_function=embed_model,
+            embedding_function=get_embed_model(),
             persist_directory=self.persist_directory,
         )
 
