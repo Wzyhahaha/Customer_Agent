@@ -1,6 +1,10 @@
+from typing import TYPE_CHECKING
+
 from rag.retrieval_service import RetrievalBundle
-from rag.enhanced_retrieval_service import EnhancedRetrievalResult
 from rag.pipeline_types import RetrievedEvidence
+
+if TYPE_CHECKING:
+    from rag.enhanced_retrieval_service import EnhancedRetrievalResult
 
 
 def _format_docs(title: str, docs: list) -> str:
@@ -44,7 +48,7 @@ def _format_evidence_group(title: str, evidence: list[RetrievedEvidence]) -> str
     return f"## {title}\n" + "\n\n".join(rows)
 
 
-def format_enhanced_context(result: EnhancedRetrievalResult) -> str:
+def format_enhanced_context(result: "EnhancedRetrievalResult") -> str:
     trace = result.trace
     if trace is None:
         return "## 检索 Trace\n无"
