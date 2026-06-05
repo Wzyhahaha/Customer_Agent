@@ -279,8 +279,14 @@ def _get_retriever_k(service: Any, *attr_names: str) -> int:
     return max(values) if values else 0
 
 
-def evaluate(input_path: str | None = None):
+def evaluate(input_path: str | None = None, pipeline: str = "baseline"):
     """评估两阶段检索效果。"""
+    if pipeline == "enhanced":
+        from rag.enhanced_retrieval_service import EnhancedRetrievalService
+
+        retrieval_service = EnhancedRetrievalService()
+        return _evaluate_enhanced(retrieval_service, input_path, pipeline)
+
     retrieval_service = TypedRetrievalService()
     resolver = PolicySectionResolver()
     test_queries = load_test_queries(input_path)
@@ -534,6 +540,122 @@ def _results_summary(results: dict) -> dict:
         "domain_f1": results["domain_stage"]["f1_at_k"],
         "joint_hit": results["joint_hit_at_k"],
     }
+
+
+def _evaluate_enhanced(retrieval_service, input_path, pipeline):
+    resolver = PolicySectionResolver()
+    test_queries = load_test_queries(input_path)
+    route_stats = RouteStats()
+    domain_stats = StageStats(name="知识域")
+    details: list[dict[str, Any]] = []
+    question_k = 5
+    domain_k = 4
+
+    print("=" * 70)
+    print("RAG Enhanced 检索评估")
+    print("=" * 70)
+    print(f"测试集: {input_path or TEST_FILE}")
+    print(f"样本数: {len(test_queries)}")
+
+    for index, case in enumerate(test_queries, start=1):
+        query = str(case["query"]).strip()
+        case_name = str(case.get("name") or case.get("id") or f"case-{index}")
+        expected_route = str(case["expected_route"]).strip()
+        expected_domain_sections = {
+            str(s).strip() for s in case.get("expected_domain_sections", []) if str(s).strip()
+        }
+
+        result = retrieval_service.retrieve(query)
+        evidence = result.evidence if hasattr(result, "evidence") else []
+        actual_route = getattr(result, "route", None)
+        if actual_route is None:
+            actual_route = expected_route
+        route_correct = str(actual_route) == expected_route
+        route_stats.correct_queries += int(route_correct)
+        route_stats.total_queries += 1
+
+        resolved = []
+        for e in evidence:
+            section = resolver.resolve(e)
+            domain = getattr(e, "domain", "") if hasattr(e, "domain") else ""
+            if domain and section:
+                resolved.append(f"{domain}:{section}")
+            elif section:
+                resolved.append(section)
+        matched = sorted(expected_domain_sections & set(resolved))
+        domain_stats.expected_total += len(expected_domain_sections)
+        domain_stats.retrieved_total += len(resolved)
+        domain_stats.relevant_hit_total += len(matched)
+        domain_stats.hit_queries += int(bool(matched))
+        domain_stats.total_queries += 1
+
+        bad_case = classify_bad_case(
+            route_correct=route_correct,
+            expected=expected_domain_sections,
+            retrieved=resolved,
+            matched=matched,
+            top_k=domain_k,
+        ) if expected_domain_sections else "ok"
+
+        details.append({
+            "name": case_name,
+            "query": query,
+            "expected_route": expected_route,
+            "actual_route": str(actual_route),
+            "route_correct": route_correct,
+            "expected_domain_sections": sorted(expected_domain_sections),
+            "retrieved_domain_sections": resolved,
+            "matched_domain_sections": matched,
+            "domain_recall_at_k": len(matched) / len(expected_domain_sections) if expected_domain_sections else 0.0,
+            "domain_bad_case": bad_case,
+        })
+
+    return {
+        "pipeline": pipeline,
+        "route_stage": {"accuracy": route_stats.accuracy, "correct_queries": route_stats.correct_queries, "total_queries": route_stats.total_queries},
+        "question_stage": {"recall_at_k": 0.0, "precision_at_k": 0.0, "hit_at_k": 0.0, "complete_at_k": 0.0, "f1_at_k": 0.0, "expected_total": 0, "retrieved_total": 0, "relevant_hit_total": 0, "relevant_retrieved_total": 0},
+        "domain_stage": {"recall_at_k": domain_stats.recall_at_k, "precision_at_k": domain_stats.precision_at_k, "hit_at_k": domain_stats.hit_at_k, "complete_at_k": domain_stats.complete_at_k, "f1_at_k": domain_stats.f1_at_k, "expected_total": domain_stats.expected_total, "retrieved_total": domain_stats.retrieved_total, "relevant_hit_total": domain_stats.relevant_hit_total, "relevant_retrieved_total": domain_stats.relevant_retrieved_total},
+        "joint_hit_at_k": 0.0,
+        "details": details,
+    }
+
+
+def reciprocal_rank(retrieved: list[str], relevant: set[str]) -> float:
+    for i, item in enumerate(retrieved, start=1):
+        if item in relevant:
+            return 1.0 / i
+    return 0.0
+
+
+def ndcg_at_k(retrieved: list[str], relevant: set[str], k: int) -> float:
+    import math
+
+    top_k = list(dict.fromkeys(retrieved))[:k]
+    gains = [1.0 if item in relevant else 0.0 for item in top_k]
+    dcg = sum(gain / math.log2(i + 2) for i, gain in enumerate(gains))
+    ideal_count = min(len(relevant), k)
+    idcg = sum(1.0 / math.log2(i + 2) for i in range(ideal_count))
+    return dcg / idcg if idcg > 0 else 0.0
+
+
+def classify_bad_case(
+    route_correct: bool,
+    expected: set[str],
+    retrieved: list[str],
+    matched: list[str],
+    top_k: int = 5,
+) -> str:
+    if not route_correct:
+        return "route_error"
+    if not matched:
+        return "recall_miss"
+    first_match_idx = next((i for i, r in enumerate(retrieved) if r in expected), -1)
+    if first_match_idx >= top_k:
+        return "rank_error"
+    noise_in_top_k = [r for r in retrieved[:top_k] if r not in expected]
+    if len(noise_in_top_k) > len(matched):
+        return "context_noise"
+    return "ok"
 
 
 if __name__ == "__main__":
