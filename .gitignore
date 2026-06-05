@@ -1,20 +1,32 @@
 .worktrees/
 
-# Local environment and secrets
+# Environment
 .env
-.env.*
-!.env.example
 
-# Python cache and test cache
+# Python
 __pycache__/
 *.py[cod]
-.pytest_cache/
-pytest-cache-files-*/
+*.egg-info/
+dist/
+build/
 
-# Runtime logs
-logs/
+# Database
+*.db
+data/*.db
 
-# Local vector stores and generated runtime state
+# Chroma
 chroma_db/
-data/chat_history.json
-data/issue_status.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Reports (generated)
+reports/*.json
