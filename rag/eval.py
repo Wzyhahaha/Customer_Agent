@@ -31,10 +31,11 @@ TEST_FILE = PROJECT_ROOT / "data" / "test_queries.jsonl"
 POLICY_HEADING_RE = re.compile(r"^##\s+(.+?)(?:（\d+条）)?\s*$", re.MULTILINE)
 
 
-def load_test_queries() -> list[dict[str, Any]]:
+def load_test_queries(input_path: str | None = None) -> list[dict[str, Any]]:
     """加载测试集并校验字段。"""
+    test_file = Path(input_path) if input_path else TEST_FILE
     test_queries: list[dict[str, Any]] = []
-    with TEST_FILE.open("r", encoding="utf-8") as file:
+    with test_file.open("r", encoding="utf-8") as file:
         for line_no, line in enumerate(file, start=1):
             raw = line.strip()
             if not raw:
@@ -50,7 +51,7 @@ def load_test_queries() -> list[dict[str, Any]]:
             missing_fields = [field for field in required_fields if field not in case]
             if missing_fields:
                 raise ValueError(
-                    f"{TEST_FILE}:{line_no} 缺少字段: {', '.join(missing_fields)}"
+                    f"{test_file}:{line_no} 缺少字段: {', '.join(missing_fields)}"
                 )
 
             test_queries.append(case)
@@ -278,11 +279,11 @@ def _get_retriever_k(service: Any, *attr_names: str) -> int:
     return max(values) if values else 0
 
 
-def evaluate():
+def evaluate(input_path: str | None = None):
     """评估两阶段检索效果。"""
     retrieval_service = TypedRetrievalService()
     resolver = PolicySectionResolver()
-    test_queries = load_test_queries()
+    test_queries = load_test_queries(input_path)
 
     question_stats = StageStats(name="问题库")
     domain_stats = StageStats(name="知识域")
@@ -300,7 +301,7 @@ def evaluate():
     print("=" * 70)
     print("RAG 两阶段检索评估")
     print("=" * 70)
-    print(f"测试集文件: {TEST_FILE}")
+    print(f"测试集: {input_path or TEST_FILE}")
     print(f"样本数: {len(test_queries)}")
     print(f"问题库 K: {question_k or 'N/A'}")
     print(f"知识域 K: {domain_k or 'N/A'}")
@@ -487,5 +488,63 @@ def evaluate():
     }
 
 
+def _parse_args() -> argparse.Namespace:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="RAG retrieval evaluation")
+    parser.add_argument(
+        "--pipeline",
+        choices=["baseline", "enhanced"],
+        default="baseline",
+        help="Pipeline to evaluate (default: baseline)",
+    )
+    parser.add_argument(
+        "--input",
+        default=str(PROJECT_ROOT / "data" / "eval" / "test_queries.jsonl"),
+        help="Path to test queries JSONL",
+    )
+    parser.add_argument(
+        "--output",
+        default=None,
+        help="Path to save JSON results (optional)",
+    )
+    return parser.parse_args()
+
+
+def _save_results(results: dict, path: str) -> None:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+    print(f"\nResults saved to {output_path}")
+
+
+def _results_summary(results: dict) -> dict:
+    return {
+        "pipeline": results.get("pipeline", "unknown"),
+        "num_cases": len(results.get("details", [])),
+        "route_accuracy": results["route_stage"]["accuracy"],
+        "question_recall": results["question_stage"]["recall_at_k"],
+        "question_precision": results["question_stage"]["precision_at_k"],
+        "question_hit": results["question_stage"]["hit_at_k"],
+        "question_f1": results["question_stage"]["f1_at_k"],
+        "domain_recall": results["domain_stage"]["recall_at_k"],
+        "domain_precision": results["domain_stage"]["precision_at_k"],
+        "domain_hit": results["domain_stage"]["hit_at_k"],
+        "domain_f1": results["domain_stage"]["f1_at_k"],
+        "joint_hit": results["joint_hit_at_k"],
+    }
+
+
 if __name__ == "__main__":
-    evaluate()
+    args = _parse_args()
+    results = evaluate(args.input)
+    results["pipeline"] = args.pipeline
+
+    if args.output:
+        _save_results(results, args.output)
+    else:
+        _save_results(
+            results,
+            str(PROJECT_ROOT / "reports" / f"eval_results_{args.pipeline}.json"),
+        )
