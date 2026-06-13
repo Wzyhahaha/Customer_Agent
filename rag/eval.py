@@ -520,6 +520,7 @@ def _parse_args() -> argparse.Namespace:
 def _save_results(results: dict, path: str) -> None:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    results = {**results, **_results_summary(results)}
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     print(f"\nResults saved to {output_path}")
@@ -660,7 +661,7 @@ def classify_bad_case(
 
 if __name__ == "__main__":
     args = _parse_args()
-    results = evaluate(args.input)
+    results = evaluate(args.input, pipeline=args.pipeline)
     results["pipeline"] = args.pipeline
 
     if args.output:

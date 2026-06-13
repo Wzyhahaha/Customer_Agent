@@ -231,3 +231,33 @@ def test_classify_bad_case_route_recall_rank_and_context():
         )
         == "context_noise"
     )
+
+
+def test_results_summary_flattens_nested_metrics_for_report():
+    results = {
+        "pipeline": "baseline",
+        "details": [{"name": "case"}],
+        "route_stage": {"accuracy": 0.8},
+        "question_stage": {
+            "recall_at_k": 0.7,
+            "precision_at_k": 0.6,
+            "hit_at_k": 0.9,
+            "f1_at_k": 0.65,
+        },
+        "domain_stage": {
+            "recall_at_k": 0.5,
+            "precision_at_k": 0.4,
+            "hit_at_k": 0.75,
+            "f1_at_k": 0.45,
+        },
+        "joint_hit_at_k": 0.3,
+    }
+
+    summary = eval_module._results_summary(results)
+
+    assert summary["pipeline"] == "baseline"
+    assert summary["num_cases"] == 1
+    assert summary["route_accuracy"] == 0.8
+    assert summary["question_recall"] == 0.7
+    assert summary["domain_precision"] == 0.4
+    assert summary["joint_hit"] == 0.3

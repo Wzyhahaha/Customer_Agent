@@ -1,4 +1,6 @@
 .worktrees/
+.serena/
+.superpowers/
 
 # Environment
 .env
@@ -30,3 +32,16 @@ chroma_db/
 
 # Reports (generated)
 reports/*.json
+reports/external_eval_*.md
+
+# Runtime artifacts
+logs/
+tests/_external_eval_tmp/
+
+# Local planning / presentation materials
+docs/customer_agent_engineering_research_upgrade_*.md
+docs/quickstart_evaluation.md
+docs/resume_star.md
+docs/superpowers/plans/
+技术面试问答整理.md
+阿里云模型.png

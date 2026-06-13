@@ -1,2 +1,5 @@
-chat_model_name : qwen3-max
+chat_model_provider : deepseek
+chat_model_name : deepseek-chat
+embedding_model_provider : local_bge_m3
 embedding_model_name : text-embedding-v4
+embedding_model_path : models/bge-m3

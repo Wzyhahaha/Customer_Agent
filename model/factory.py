@@ -1,25 +1,78 @@
-from abc import ABC,abstractmethod
-import sys,os
+from __future__ import annotations
+
+import os
+import sys
+from abc import ABC, abstractmethod
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from typing import Optional
+
 from langchain_core.embeddings import Embeddings
-from langchain_community.chat_models.tongyi import ChatTongyi,BaseChatModel
+from langchain_core.language_models import BaseChatModel
 from langchain_community.embeddings import DashScopeEmbeddings
+from sentence_transformers import SentenceTransformer
 from utils.config_handler import rag_conf
+
 
 class BaseModelFactory(ABC):
     @abstractmethod
-    def generator(self)->Optional[Embeddings | BaseChatModel]:
+    def generator(self) -> Embeddings | BaseChatModel:
         pass
 
+
 class ChatModelFactory(BaseModelFactory):
-    def generator(self):
-        # 聊天模型名称从 rag.yml 读取，方便后续切换不同大模型。
-        return ChatTongyi(model=rag_conf["chat_model_name"])
+    def generator(self) -> BaseChatModel:
+        provider = rag_conf.get("chat_model_provider", "dashscope")
+        model_name = rag_conf["chat_model_name"]
+
+        if provider == "deepseek":
+            from langchain_openai import ChatOpenAI
+
+            return ChatOpenAI(
+                model=model_name,
+                api_key=os.getenv("DEEPSEEK_API_KEY", ""),
+                base_url=os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
+            )
+
+        # default: dashscope
+        from langchain_community.chat_models.tongyi import ChatTongyi
+
+        return ChatTongyi(model=model_name)
+
+
+class LocalBgeM3Embeddings(Embeddings):
+    def __init__(self, model_path: str | os.PathLike[str]):
+        resolved_path = Path(model_path).expanduser().resolve()
+        if not resolved_path.is_dir():
+            raise FileNotFoundError(f"本地 bge-m3 模型目录不存在：{resolved_path}")
+        self.model = SentenceTransformer(str(resolved_path), trust_remote_code=True)
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        return self.model.encode(
+            texts,
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        ).tolist()
+
+    def embed_query(self, text: str) -> list[float]:
+        return self.model.encode(
+            text,
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        ).tolist()
+
 
 class EmbeddingsFactory(BaseModelFactory):
-    def generator(self):
-        # 向量化模型与聊天模型解耦，便于分别调整检索效果和生成效果。
+    def generator(self) -> Embeddings:
+        provider = rag_conf.get("embedding_model_provider", "dashscope")
+        if provider == "local_bge_m3":
+            default_path = Path.home() / "Desktop" / "my-mini-swe" / "models" / "bge-m3"
+            return LocalBgeM3Embeddings(rag_conf.get("embedding_model_path", str(default_path)))
+
         return DashScopeEmbeddings(model=rag_conf["embedding_model_name"])
 
 
